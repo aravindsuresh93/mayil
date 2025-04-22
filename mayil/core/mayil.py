@@ -492,9 +492,6 @@ class Mayil:
         <body>
             <div class="container">
                 {''.join(self.body_content)}
-                <div style="clear: both; text-align: center; margin-top: 30px; padding: 20px; color: #9ca3af; font-size: 12px;">
-                    Created with Mayil
-                </div>
             </div>
         </body>
         </html>

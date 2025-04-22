@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="mayil",
-    version="0.1.0",
+    version="0.2.0",
     author="Aravind Suresh",
     author_email="your.email@example.com",
     description="A Python library for generating beautiful HTML emails",
