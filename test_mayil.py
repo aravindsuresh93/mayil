@@ -1,9 +1,8 @@
-from mayil import Mayil
+import mayil as my
 import pandas as pd
+
 def create_sample_email():
-    # Create a new Mayil instance
-    my = Mayil()
-    
+    # Build the email content
     my.title("Welcome to Our Newsletter")
 
     # Build the email content
@@ -23,7 +22,6 @@ def create_sample_email():
 
     cols = my.columns(3)
     with cols[0]:
-
         my.metric("Total Users", 1000)
         my.sticky_note("Sticky Note 2", t, color="blue")
         
@@ -68,8 +66,6 @@ def create_sample_email():
     # Test with text colors
     my.ftable(df, text_colors=conditions)
 
-    
-    
     my.header("Upcoming Events")
     my.text("Join us for our upcoming webinar on Python development.")
     my.text("Date: March 15, 2024")
@@ -92,10 +88,10 @@ def save_to_file(html_content, filename="sample_email.html"):
 
 if __name__ == "__main__":
     # Create the email
-    email_builder = create_sample_email()
+    create_sample_email()
     
     # Get the HTML content
-    html_content = email_builder.body
+    html_content = my.body()
     
     # Save to file
     save_to_file(html_content)
