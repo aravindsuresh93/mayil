@@ -229,7 +229,7 @@ class Mayil:
         
         return columns
 
-    def dataframe(self, df, align='left'):
+    def table(self, df, align='left'):
         """Add a styled DataFrame to the email.
         
         Args:

@@ -41,7 +41,7 @@ def create_sample_email():
         'Score': [95.5, 88.3, 92.1],
         'Active': [True, False, True]
     })
-    my.dataframe(df)
+    my.table(df)
     my.hyperlink("Click here", "https://www.google.com")
 
     # Test ftable with conditional formatting

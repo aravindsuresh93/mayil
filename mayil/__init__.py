@@ -15,7 +15,7 @@ metric = _default_instance.metric
 sticky_note = _default_instance.sticky_note
 divider = _default_instance.divider
 columns = _default_instance.columns
-dataframe = _default_instance.dataframe
+table = _default_instance.table
 ftable = _default_instance.ftable
 hyperlink = _default_instance.hyperlink
 
@@ -39,7 +39,7 @@ __all__ = [
     "sticky_note",
     "divider",
     "columns",
-    "dataframe",
+    "table",
     "ftable",
     "hyperlink",
     "body"
