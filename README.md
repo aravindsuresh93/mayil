@@ -11,11 +11,10 @@ pip install mayil
 ## Quick Start
 
 ```python
-from mayil import Mayil
+import mayil as my
 import pandas as pd
 
-# Create a new email
-my = Mayil()
+
 
 # Add content
 my.title("Welcome to Our Newsletter", center=True)
@@ -167,6 +166,3 @@ Each condition is defined as a tuple of (lambda function, color) where:
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
