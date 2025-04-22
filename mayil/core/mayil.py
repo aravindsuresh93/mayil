@@ -478,6 +478,39 @@ class Mayil:
         self.body_content.append(link_html)
         return self
 
+    def plotly_chart(self, fig, show_legend: bool = True) -> 'Mayil':
+        """Add a Plotly chart to the email.
+        
+        Args:
+            fig: A Plotly figure object
+            show_legend: Whether to show the legend (default: True)
+            
+        Returns:
+            Mayil: The Mayil instance for method chaining
+        """
+        # Update figure layout to white theme
+        fig.update_layout(
+            template='plotly_white',
+            showlegend=show_legend
+        )
+        
+        # Convert plotly figure to HTML
+        plot_html = fig.to_html(
+            full_html=False,
+            include_plotlyjs='cdn',
+            config={'displayModeBar': False}
+        )
+        
+        # Add responsive wrapper
+        responsive_html = f"""
+        <div style="width:100%; margin: 16px 0;">
+            {plot_html}
+        </div>
+        """
+        
+        self.body_content.append(responsive_html)
+        return self
+
     @property
     def body(self):
         """Get the complete HTML body of the email."""

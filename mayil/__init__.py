@@ -18,6 +18,7 @@ columns = _default_instance.columns
 table = _default_instance.table
 ftable = _default_instance.ftable
 hyperlink = _default_instance.hyperlink
+plotly_chart = _default_instance.plotly_chart
 
 # Create a function to get the current body content
 def body():
@@ -42,5 +43,6 @@ __all__ = [
     "table",
     "ftable",
     "hyperlink",
-    "body"
+    "body",
+    "plotly_chart"
 ] 

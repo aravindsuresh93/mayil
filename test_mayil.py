@@ -1,5 +1,7 @@
 import mayil as my
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 
 def create_sample_email():
     # Build the email content
@@ -65,6 +67,55 @@ def create_sample_email():
 
     # Test with text colors
     my.ftable(df, text_colors=conditions)
+
+    # Create a scatter plot with Plotly
+    import plotly.express as px
+    import numpy as np
+
+    # Generate some sample data
+    np.random.seed(42)
+    n_points = 100
+    x = np.random.normal(0, 2, n_points)
+    y = 0.5 * x + np.random.normal(0, 1, n_points)
+    categories = np.random.choice(['A', 'B', 'C'], n_points)
+    sizes = np.random.uniform(20, 60, n_points)
+
+    # Create scatter plot
+    fig = px.scatter(
+        x=x, y=y,
+        color=categories,
+        size=sizes,
+        labels={'x': 'X Axis', 'y': 'Y Axis'},
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+
+    # Update layout for a modern look
+    fig.update_traces(
+        marker=dict(opacity=0.8),
+        hovertemplate="<br>".join([
+            "X: %{x:.2f}",
+            "Y: %{y:.2f}",
+            "Category: %{color}",
+            "<extra></extra>"
+        ])
+    )
+
+    fig.update_layout(
+        plot_bgcolor='white',
+        title_x=0.5,
+        title_font_size=24,
+        showlegend=True,
+        legend_title_text='Categories',
+        height=500
+    )
+
+    # Add the plot to the email
+    my.plotly_chart(fig)
+
+   
+
+
+
 
     my.header("Upcoming Events")
     my.text("Join us for our upcoming webinar on Python development.")
