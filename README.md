@@ -1,6 +1,6 @@
 # Mayil
 
-A Streamlit-like package for creating structured and formatted emails in Python.
+A beautiful HTML email generator for Python that makes creating professional, responsive emails a breeze.
 
 ## Installation
 
@@ -8,79 +8,140 @@ A Streamlit-like package for creating structured and formatted emails in Python.
 pip install mayil
 ```
 
-## Usage
+## Quick Start
 
 ```python
-import mayil as my
-
-# Add components to your email
-my.header("Welcome to Our Newsletter")
-my.text("This is a sample text paragraph.")
-my.text("This is another paragraph.")
-
-# Get the complete HTML body
-html_content = my.body()
-```
-
-## Components
-
-### Header
-```python
-my.header("Your Header Text")
-```
-
-### Text
-```python
-my.text("Your paragraph text")
-```
-
-### Formatted Table (ftable)
-```python
+from mayil import Mayil
 import pandas as pd
 
-# Create a sample dataframe
+# Create a new email
+my = Mayil()
+
+# Add content
+my.title("Welcome to Our Newsletter", center=True)
+my.header("Latest Updates")
+my.text("Stay informed with our latest news and updates.")
+my.metric("Active Users", "1,234", color="#88C0D0")
+my.sticky_note("Important Notice", "Please read this carefully.", color="blue")
+
+# Add a table
 df = pd.DataFrame({
-    'Score': [85, 92, 78],
-    'Status': ['Active', 'Inactive', 'Active'],
-    'Date': pd.to_datetime(['2024-01-01', '2024-01-02', '2024-01-03'])
+    'Name': ['John', 'Jane'],
+    'Score': ['95', '85']
 })
+my.dataframe(df, align='center')
 
-# Define conditions for formatting
-conditions = {
-    'Score': [
-        (lambda x: x < 90, '#ff0000'),  # Red if < 90
-        (lambda x: x >= 90, '#00ff00')  # Green if >= 90
-    ],
-    'Status': [
-        (lambda x: x == 'Active', '#00ff00'),  # Green if active
-        (lambda x: x == 'Inactive', '#ff0000')  # Red if inactive
-    ],
-    'Date': [
-        (lambda x: x < pd.Timestamp('2024-01-02'), '#ff0000'),  # Red if before Jan 2
-        (lambda x: x >= pd.Timestamp('2024-01-02'), '#00ff00')  # Green if Jan 2 or later
-    ]
-}
-
-# Apply formatting
-my.ftable(df, conditions=conditions)  # Apply to both cell and text
-my.ftable(df, cell_colors=conditions)  # Apply only to cell background
-my.ftable(df, text_colors=conditions)  # Apply only to text
+# Get the HTML content
+html_content = my.body
 ```
 
 ## Features
 
-- Streamlit-like interface for building emails
-- HTML-based output
-- Styled components
-- Chainable methods
-- Conditional formatting for tables
-- Support for various data types (numbers, strings, dates)
-- Flexible color customization
+- 🎨 Beautiful, responsive email templates
+- 📊 Data visualization with tables and metrics
+- 🎯 Conditional formatting for tables
+- 📝 Rich text formatting
+- 📱 Mobile-friendly design
+- 🔗 Easy hyperlink support
+- 📐 Flexible layout options with columns
+
+## API Reference
+
+### Basic Components
+
+#### Title
+```python
+my.title("Welcome", center=True)
+```
+Adds a large title to the email. Optionally center it.
+
+#### Header
+```python
+my.header("Section Title")
+```
+Adds a section header.
+
+#### Subheader
+```python
+my.subheader("Subsection Title")
+```
+Adds a subsection header.
+
+#### Text
+```python
+my.text("Your paragraph text", justify=True)
+```
+Adds a paragraph of text. Optionally justify the text.
+
+#### Metric
+```python
+my.metric("Active Users", "1,234", color="#88C0D0")
+```
+Displays a metric with label and value. Customize the value color.
+
+#### Sticky Note
+```python
+my.sticky_note("Important", "Read this carefully", color="blue")
+```
+Adds a sticky note component. Colors: yellow, green, blue, red, white, violet, orange, darkgreen.
+
+#### Divider
+```python
+my.divider()
+```
+Adds a light grey dotted divider line.
+
+### Layout Components
+
+#### Columns
+```python
+cols = my.columns(3)
+with cols[0]:
+    my.metric("Metric 1", "100")
+with cols[1]:
+    my.metric("Metric 2", "200")
+```
+Creates a multi-column layout (max 4 columns).
+
+### Table Components
+
+#### DataFrame
+```python
+df = pd.DataFrame({
+    'Name': ['John', 'Jane'],
+    'Score': ['95', '85']
+})
+my.dataframe(df, align='center')
+```
+Adds a styled DataFrame to the email.
+
+#### Formatted Table (ftable)
+```python
+conditions = {
+    'Score': [
+        (lambda x: x < '90', '#ffb3ba'),  # Pastel red
+        (lambda x: x >= '90', '#baffc9')  # Pastel green
+    ],
+    'Status': [
+        (lambda x: x.lower() == 'active', '#bae1ff'),  # Pastel blue
+        (lambda x: x.lower() == 'inactive', '#ffdfba')  # Pastel orange
+    ]
+}
+my.ftable(df, cell_colors=conditions, align='center')
+```
+Adds a table with conditional formatting based on column values.
+
+### Links
+
+#### Hyperlink
+```python
+my.hyperlink("Visit our website", "https://example.com")
+```
+Adds a clickable link to the email.
 
 ## Advanced Usage
 
 ### Creating Multiple Instances
-While the default instance is available through `import mayil as my`, you can create additional instances if needed:
 
 ```python
 from mayil import Mayil
@@ -91,11 +152,21 @@ custom_instance.header("Custom Header")
 ```
 
 ### Table Formatting Options
+
 The `ftable` method supports three types of conditional formatting:
+
 1. `conditions`: Applies formatting to both cell background and text
 2. `cell_colors`: Applies formatting only to cell background
 3. `text_colors`: Applies formatting only to text
 
 Each condition is defined as a tuple of (lambda function, color) where:
 - The lambda function should return a boolean
-- The color can be any valid CSS color (hex, rgb, named colors) 
+- The color can be any valid CSS color (hex, rgb, named colors)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
