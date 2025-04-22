@@ -45,6 +45,7 @@ html_content = my.body
 - 📱 Mobile-friendly design
 - 🔗 Easy hyperlink support
 - 📐 Flexible layout options with columns
+- 📈 Interactive Plotly charts support
 
 ## API Reference
 
@@ -131,6 +132,24 @@ conditions = {
 my.ftable(df, cell_colors=conditions, align='center')
 ```
 Adds a table with conditional formatting based on column values.
+
+### Data Visualization
+
+#### Plotly Chart
+```python
+import plotly.express as px
+
+# Create a sample plotly figure
+df = pd.DataFrame({
+    'Date': pd.date_range('2024-01-01', '2024-01-10'),
+    'Value': [10, 15, 13, 17, 19, 16, 14, 18, 20, 22]
+})
+fig = px.line(df, x='Date', y='Value', title='Trend Analysis')
+
+# Add the plotly chart to the email
+my.plotly_chart(fig)
+```
+Adds an interactive Plotly chart to the email. The chart will be rendered as an HTML component that can be interacted with in email clients that support HTML content.
 
 ### Links
 

@@ -283,7 +283,8 @@
                                 <li style="margin-left: 2rem;"><a href="#columns">columns</a></li>
                                 <li style="margin-left: 2rem;"><a href="#dataframe">dataframe</a></li>
                                 <li style="margin-left: 2rem;"><a href="#ftable">ftable</a></li>
-                               <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
+                                <li style="margin-left: 2rem;"><a href="#plotly-chart">plotly_chart</a></li>
+                                <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
                         </ul>
                     </details>
                 </li>
@@ -578,6 +579,107 @@
                 </div>
             </section>
 
+            <section id="plotly-chart" class="method">
+                <h4>plotly_chart(fig)</h4>
+                <p>Add an interactive Plotly chart to the email.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>fig (plotly.graph_objects.Figure): The Plotly figure to display</dd>
+                </div>
+                <div class="code-block">
+                    <span class="keyword">import</span> plotly.express <span class="keyword">as</span> px<br><br>
+                    <span class="comment"># Create a sample plotly figure</span><br>
+                    df = pd.DataFrame({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Date'</span>: pd.date_range(<span class="string">'2024-01-01'</span>, <span class="string">'2024-01-10'</span>),<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Value'</span>: [<span class="number">10</span>, <span class="number">15</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">19</span>, <span class="number">16</span>, <span class="number">14</span>, <span class="number">18</span>, <span class="number">20</span>, <span class="number">22</span>]<br>
+                    })<br>
+                    fig = px.line(df, x=<span class="string">'Date'</span>, y=<span class="string">'Value'</span>, title=<span class="string">'Trend Analysis'</span>)<br><br>
+                    <span class="comment"># Add the plotly chart to the email</span><br>
+                    my.plotly_chart(fig)
+                </div>
+                <div class="method-sample">
+                    <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; background-color: white;">
+                        <div style="font-size: 18px; font-weight: 500; margin-bottom: 16px; color: #2D3748;">Trend Analysis</div>
+                        <div style="position: relative; height: 400px; width: 100%; background-color: white;">
+                            <!-- Plotly-like Chart Container -->
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
+                                <!-- Chart Area -->
+                                <div style="position: relative; height: 100%; width: 100%;">
+                                    <!-- Y-Axis -->
+                                    <div style="position: absolute; left: 0; top: 0; bottom: 30px; width: 40px; border-right: 1px solid #E2E8F0;">
+                                        <div style="position: absolute; top: 0; right: 8px; font-size: 12px; color: #718096;">22</div>
+                                        <div style="position: absolute; top: 25%; right: 8px; font-size: 12px; color: #718096;">18</div>
+                                        <div style="position: absolute; top: 50%; right: 8px; font-size: 12px; color: #718096;">15</div>
+                                        <div style="position: absolute; top: 75%; right: 8px; font-size: 12px; color: #718096;">12</div>
+                                        <div style="position: absolute; bottom: 0; right: 8px; font-size: 12px; color: #718096;">10</div>
+                                    </div>
+                                    <!-- Main Chart -->
+                                    <div style="position: absolute; left: 40px; right: 0; top: 0; bottom: 30px;">
+                                        <!-- Grid Lines -->
+                                        <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; border-bottom: 1px solid #EDF2F7;">
+                                            <div style="position: absolute; left: 0; right: 0; top: 25%; height: 1px; background-color: #EDF2F7;"></div>
+                                            <div style="position: absolute; left: 0; right: 0; top: 50%; height: 1px; background-color: #EDF2F7;"></div>
+                                            <div style="position: absolute; left: 0; right: 0; top: 75%; height: 1px; background-color: #EDF2F7;"></div>
+                                        </div>
+                                        <!-- Line Chart -->
+                                        <svg style="width: 100%; height: 100%;">
+                                            <path d="M50,280 L100,200 L150,220 L200,160 L250,120 L300,180 L350,200 L400,140 L450,100 L500,80" 
+                                                  stroke="#3B82F6" 
+                                                  stroke-width="2" 
+                                                  fill="none"/>
+                                            <!-- Data Points -->
+                                            <circle cx="50" cy="280" r="4" fill="#3B82F6"/>
+                                            <circle cx="100" cy="200" r="4" fill="#3B82F6"/>
+                                            <circle cx="150" cy="220" r="4" fill="#3B82F6"/>
+                                            <circle cx="200" cy="160" r="4" fill="#3B82F6"/>
+                                            <circle cx="250" cy="120" r="4" fill="#3B82F6"/>
+                                            <circle cx="300" cy="180" r="4" fill="#3B82F6"/>
+                                            <circle cx="350" cy="200" r="4" fill="#3B82F6"/>
+                                            <circle cx="400" cy="140" r="4" fill="#3B82F6"/>
+                                            <circle cx="450" cy="100" r="4" fill="#3B82F6"/>
+                                            <circle cx="500" cy="80" r="4" fill="#3B82F6"/>
+                                        </svg>
+                                    </div>
+                                    <!-- X-Axis -->
+                                    <div style="position: absolute; left: 40px; right: 0; bottom: 0; height: 30px; border-top: 1px solid #E2E8F0;">
+                                        <div style="position: absolute; left: 30px; bottom: 8px; font-size: 12px; color: #718096;">Jan 1</div>
+                                        <div style="position: absolute; left: 140px; bottom: 8px; font-size: 12px; color: #718096;">Jan 3</div>
+                                        <div style="position: absolute; left: 250px; bottom: 8px; font-size: 12px; color: #718096;">Jan 5</div>
+                                        <div style="position: absolute; left: 360px; bottom: 8px; font-size: 12px; color: #718096;">Jan 7</div>
+                                        <div style="position: absolute; left: 470px; bottom: 8px; font-size: 12px; color: #718096;">Jan 9</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Plotly Modebar (toolbar) -->
+                            <div style="position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; background-color: rgba(255,255,255,0.9); padding: 4px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <div style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="#718096" fill="none">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                                    </svg>
+                                </div>
+                                <div style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="#718096" fill="none">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                </div>
+                                <div style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="#718096" fill="none">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L12 4m4 4H8"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hover Info -->
+                        <div style="position: absolute; display: none; background-color: white; border: 1px solid #E2E8F0; border-radius: 4px; padding: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <div style="font-size: 12px; color: #4A5568;">
+                                <div>Date: Jan 5, 2024</div>
+                                <div>Value: 19</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="hyperlink" class="method">
                 <h4>hyperlink(text, url)</h4>
                 <p>Add a clickable link to the email.</p>
@@ -621,7 +723,7 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>Generated by AI, Instructed by Human | Inspired by Streamlit</p>
+                <p>Generated by AI, Instructed by Human</p>
             </div>
         </div>
     </footer>

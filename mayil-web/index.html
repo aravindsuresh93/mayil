@@ -154,7 +154,7 @@
 
         /* Preview Section */
         .preview-section {
-            background-color: #F5F5F5;
+            background-color: #1a1a1a;
             padding: 4rem 0;
         }
 
@@ -306,32 +306,45 @@
     </section>
 
     <section class="preview-section" id="preview" style="background-color: #1a1a1a;">
-        <div class="container">
-            <div class="preview-container">
+        <div class="container" style="max-width: 1600px;">
+            <div class="preview-container" style="grid-template-columns: minmax(500px, 1fr) minmax(500px, 1fr); gap: 3rem;">
                 <div class="code-examples">
                     <h2 style="color: white;">Example Code</h2>
                     <div class="code-block">
                         <span class="keyword">import</span> mayil <span class="keyword">as</span> my<br>
-                        <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br><br>
+                        <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br>
+                        <span class="keyword">import</span> plotly.express <span class="keyword">as</span> px<br><br>
                         <span class="comment"># Add a header</span><br>
                         my.header(<span class="string">"Monthly Report"</span>)<br><br>
                         <span class="comment"># Add metrics</span><br>
                         my.metric(<span class="string">"Active Users"</span>, <span class="string">"1,234"</span>)<br>
                         my.metric(<span class="string">"Conversion Rate"</span>, <span class="string">"24.5%"</span>)<br><br>
+                        <span class="comment"># Create and add an interactive scatter plot</span><br>
+                        df = pd.DataFrame({<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Engagement'</span>: [85, 92, 78, 95, 89, 70, 88, 91, 76, 85],<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Satisfaction'</span>: [90, 85, 75, 88, 92, 72, 83, 89, 78, 86],<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Users'</span>: [120, 250, 180, 300, 220, 150, 280, 210, 190, 240]<br>
+                        })<br>
+                        fig = px.scatter(df, x=<span class="string">'Engagement'</span>, y=<span class="string">'Satisfaction'</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;size=<span class="string">'Users'</span>, color=<span class="string">'Engagement'</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;title=<span class="string">'User Engagement vs. Satisfaction'</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;color_continuous_scale=<span class="string">'viridis'</span>)<br>
+                        my.plotly_chart(fig)<br><br>
                         <span class="comment"># Add a sticky note</span><br>
                         my.sticky_note(<span class="string">"Important Update"</span>, <span class="string">"New features are now available!"</span>)<br><br>
                         <span class="comment"># Add a table</span><br>
-                        df = pd.DataFrame({<br>
+                        df_table = pd.DataFrame({<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>],<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'95'</span>, <span class="string">'85'</span>]<br>
                         })<br>
-                        my.dataframe(df, align=<span class="string">'center'</span>)
+                        my.dataframe(df_table, align=<span class="string">'center'</span>)
                     </div>
                 </div>
                 <div class="preview-output">
                     <h2>Output Preview</h2>
                     <div class="preview-content">
-                        <h2 style="font-size: 26px; font-weight: 300; margin-bottom: 20px; color: #1a1a1a; letter-spacing: -0.5px;">Monthly Report</h2>
+                        <h2 style="font-size: 26px; font-weight: 300; margin-bottom: 12px; color: #1a1a1a; letter-spacing: -0.5px;">Monthly Report</h2>
+                        
                         
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 20px;">
                             <div style="width: 100%; margin-bottom: 20px; clear: both;">
@@ -344,6 +357,79 @@
                                 <div style="display: inline-block; border-radius: 4px; padding: 15px; box-shadow: 0 4px 4px rgba(0,0,0,0.03); min-width: 120px; text-align: center;">
                                     <div style="font-size: 14px; color: #666; font-weight: 300;">Conversion Rate</div>
                                     <div style="font-size: 24px; color: #000000; font-weight: 700;">24.5%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Plotly Chart Preview -->
+                        <div style="border: 1px solid #e5e7eb; border-radius: 8px; margin: 20px 0; background-color: white;">
+                            <div style="padding: 12px 16px;">
+                                <div style="font-size: 16px; font-weight: 500; color: #2D3748; margin-bottom: 8px;">User Engagement vs. Satisfaction</div>
+                                <div style="position: relative; height: 180px; width: 100%;">
+                                    <!-- Chart Area -->
+                                    <div style="position: absolute; left: 40px; right: 20px; top: 5px; bottom: 25px;">
+                                        <!-- Background Grid -->
+                                        <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;">
+                                            <div style="position: absolute; left: 0; right: 0; top: 25%; height: 1px; background-color: #EDF2F7;"></div>
+                                            <div style="position: absolute; left: 0; right: 0; top: 50%; height: 1px; background-color: #EDF2F7;"></div>
+                                            <div style="position: absolute; left: 0; right: 0; top: 75%; height: 1px; background-color: #EDF2F7;"></div>
+                                        </div>
+                                        <!-- Scatter Points -->
+                                        <svg style="width: 100%; height: 100%;">
+                                            <!-- Gradient definition -->
+                                            <defs>
+                                                <linearGradient id="viridisGradient" x1="0%" y1="0%" x2="100%" y1="0%">
+                                                    <stop offset="0%" style="stop-color:#440154"/>
+                                                    <stop offset="25%" style="stop-color:#3B528B"/>
+                                                    <stop offset="50%" style="stop-color:#21908C"/>
+                                                    <stop offset="75%" style="stop-color:#5DC963"/>
+                                                    <stop offset="100%" style="stop-color:#FDE725"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <!-- Data Points -->
+                                            <circle cx="100" cy="130" r="8" fill="#440154" opacity="0.8"/>
+                                            <circle cx="160" cy="100" r="10" fill="#3B528B" opacity="0.8"/>
+                                            <circle cx="220" cy="115" r="7" fill="#21908C" opacity="0.8"/>
+                                            <circle cx="280" cy="85" r="11" fill="#5DC963" opacity="0.8"/>
+                                            <circle cx="340" cy="95" r="9" fill="#FDE725" opacity="0.8"/>
+                                            <circle cx="130" cy="140" r="6" fill="#440154" opacity="0.8"/>
+                                            <circle cx="190" cy="110" r="10" fill="#3B528B" opacity="0.8"/>
+                                            <circle cx="250" cy="100" r="8" fill="#21908C" opacity="0.8"/>
+                                            <circle cx="310" cy="115" r="7" fill="#5DC963" opacity="0.8"/>
+                                            <circle cx="370" cy="105" r="9" fill="#FDE725" opacity="0.8"/>
+                                        </svg>
+                                    </div>
+                                    <!-- Axes -->
+                                    <div style="position: absolute; left: 0; top: 5px; bottom: 25px; width: 40px;">
+                                        <div style="position: absolute; top: 0; right: 8px; font-size: 10px; color: #718096;">85</div>
+                                        <div style="position: absolute; top: 25%; right: 8px; font-size: 10px; color: #718096;">82</div>
+                                        <div style="position: absolute; top: 50%; right: 8px; font-size: 10px; color: #718096;">79</div>
+                                        <div style="position: absolute; top: 75%; right: 8px; font-size: 10px; color: #718096;">76</div>
+                                        <div style="position: absolute; bottom: 0; right: 8px; font-size: 10px; color: #718096;">73</div>
+                                    </div>
+                                    <div style="position: absolute; left: 40px; right: 20px; bottom: 0; height: 25px;">
+                                        <div style="position: absolute; left: 0; bottom: 8px; font-size: 10px; color: #718096;">70</div>
+                                        <div style="position: absolute; left: 25%; bottom: 8px; font-size: 10px; color: #718096;">75</div>
+                                        <div style="position: absolute; left: 50%; bottom: 8px; font-size: 10px; color: #718096;">80</div>
+                                        <div style="position: absolute; left: 75%; bottom: 8px; font-size: 10px; color: #718096;">85</div>
+                                        <div style="position: absolute; right: 0; bottom: 8px; font-size: 10px; color: #718096;">90</div>
+                                    </div>
+                                    <!-- Axis Labels -->
+                                    <div style="position: absolute; left: 0; bottom: -15px; width: 100%; text-align: center; font-size: 10px; color: #4A5568;">Engagement Score</div>
+                                    <div style="position: absolute; left: -15px; top: 50%; transform: rotate(-90deg); transform-origin: left center; font-size: 10px; color: #4A5568;">Satisfaction Score</div>
+                                </div>
+                            </div>
+                            <!-- Plotly Modebar -->
+                            <div style="position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; background-color: rgba(255,255,255,0.9); padding: 2px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <div style="width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="#718096" fill="none">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                                    </svg>
+                                </div>
+                                <div style="width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="#718096" fill="none">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
