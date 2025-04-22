@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mayil Docs - Beautiful HTML Email Generator for Python</title>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --primary-dark: #333333;
+            --accent-color: #666666;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --background: #FFFFFF;
+            --surface: #F5F5F5;
+            --code-bg: #1E1E1E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background);
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            color: var(--text-primary);
+            padding: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 300;
+            transition: opacity 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Documentation Layout */
+        .docs-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 1rem;
+            color: #000000;
+            font-weight: 400;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: #666666;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 300;
+        }
+
+        .sidebar a:hover {
+            color: #000000;
+        }
+
+        .content {
+            padding: 0 2rem;
+        }
+
+        .content h2 {
+            margin: 2rem 0 1rem;
+            color: #000000;
+            font-weight: 400;
+        }
+
+        .content h3 {
+            margin: 1.5rem 0 1rem;
+            font-weight: 400;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .code-block {
+            background-color: var(--code-bg);
+            color: #D4D4D4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .code-block .keyword { color: #569CD6; }
+        .code-block .string { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .function { color: #DCDCAA; }
+        .code-block .number { color: #B5CEA8; }
+        .code-block .operator { color: #D4D4D4; }
+        .code-block .punctuation { color: #D4D4D4; }
+
+        .method {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .method h4 {
+            color: #000000;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .method p {
+            margin-bottom: 1rem;
+        }
+
+        .method-params {
+            margin: 1rem 0;
+        }
+
+        .method-params dt {
+            font-weight: 400;
+            margin-top: 0.5rem;
+        }
+
+        .method-params dd {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .method-sample {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+            font-weight: 400;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            font-weight: 300;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">Mayil</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="docs.html">Docs</a></li>
+                    <li><a href="https://github.com/aravindsuresh93/mayil" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container docs-container">
+        <aside class="sidebar">
+            <h3>Docs</h3>
+            <ul>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#quick-start">Quick Start</a></li>
+                <li>
+                    <details open>
+                        <summary style="cursor: pointer"><span style="pointer-events: none"><a href="#methods">API Reference</a></span></summary>
+                        <ul>
+                                <li style="margin-left: 2rem;"><a href="#title">title</a></li>
+                                <li style="margin-left: 2rem;"><a href="#header">header</a></li>
+                                <li style="margin-left: 2rem;"><a href="#subheader">subheader</a></li>
+                                <li style="margin-left: 2rem;"><a href="#text">text</a></li>
+                                <li style="margin-left: 2rem;"><a href="#metric">metric</a></li>
+                                <li style="margin-left: 2rem;"><a href="#sticky-note">sticky_note</a></li>
+                                <li style="margin-left: 2rem;"><a href="#divider">divider</a></li>
+                                <li style="margin-left: 2rem;"><a href="#columns">columns</a></li>
+                                <li style="margin-left: 2rem;"><a href="#dataframe">dataframe</a></li>
+                                <li style="margin-left: 2rem;"><a href="#ftable">ftable</a></li>
+                               <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <section id="installation">
+                <h2>Installation</h2>
+                <p>Install Mayil using pip:</p>
+                <div class="code-block">
+                    pip install mayil
+                </div>
+            </section>
+
+            <section id="quick-start">
+                <h2>Quick Start</h2>
+                <p>Here's a simple example to get you started:</p>
+                <div class="code-block">
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br><br>
+                    <span class="comment"># Create a new email</span><br>
+                    my = Mayil()<br><br>
+                    <span class="comment"># Add content</span><br>
+                    my.title(<span class="string">"Welcome to Our Newsletter"</span>)<br>
+                    my.header(<span class="string">"Latest Updates"</span>)<br>
+                    my.text(<span class="string">"Stay informed with our latest news and updates."</span>)<br><br>
+                    <span class="comment"># Get the HTML content</span><br>
+                    html_content = my.body
+                </div>
+            </section>
+
+            <section id="methods">
+                <h2>API Reference</h2>
+                <p>Mayil provides a variety of methods to create beautiful HTML emails:</p>
+            </section>
+
+            <section id="title" class="method">
+                <h4>title(text, center=False)</h4>
+                <p>Add a title to the email body.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>text (str): The title text</dd>
+                    <dd>center (bool): Whether to center the title. Defaults to False.</dd>
+                </div>
+                <div class="code-block">
+                    my.title(<span class="string">"Welcome to Our Newsletter"</span>, center=<span class="keyword">True</span>)
+                </div>
+                <div class="method-sample">
+                    <h1 style="font-size: 32px; font-weight: 300; text-align: center; color: #1a1a1a; letter-spacing: -0.5px;">Welcome to Our Newsletter</h1>
+                </div>
+            </section>
+
+            <section id="header" class="method">
+                <h4>header(text)</h4>
+                <p>Add a header to the email body.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>text (str): The header text</dd>
+                </div>
+                <div class="code-block">
+                    my.header(<span class="string">"Latest Updates"</span>)
+                </div>
+                <div class="method-sample">
+                    <h2 style="font-size: 26px; font-weight: 300; margin-bottom: 20px; color: #1a1a1a; letter-spacing: -0.5px;">Latest Updates</h2>
+                </div>
+            </section>
+
+            <section id="subheader" class="method">
+                <h4>subheader(text)</h4>
+                <p>Add a subheader to the email body.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>text (str): The subheader text</dd>
+                </div>
+                <div class="code-block">
+                    my.subheader(<span class="string">"Product Updates"</span>)
+                </div>
+                <div class="method-sample">
+                    <h3 style="font-size: 22px; font-weight: 300; margin-bottom: 20px; color: #1a1a1a; letter-spacing: -0.5px;">Product Updates</h3>
+                </div>
+            </section>
+
+            <section id="text" class="method">
+                <h4>text(text, justify=False)</h4>
+                <p>Add text to the email body.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>text (str): The text content</dd>
+                    <dd>justify (bool): Whether to justify the text. Defaults to False.</dd>
+                </div>
+                <div class="code-block">
+                    my.text(<span class="string">"This is a paragraph of text."</span>, justify=<span class="keyword">True</span>)
+                </div>
+                <div class="method-sample">
+                    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: 400; text-align: justify;">This is a paragraph of text.</p>
+                </div>
+            </section>
+
+            <section id="metric" class="method">
+                <h4>metric(label, value, color="#000000")</h4>
+                <p>Add a metric display with label and value.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>label (str): The metric label</dd>
+                    <dd>value (str): The metric value</dd>
+                    <dd>color (str): The color of the value. Defaults to black.</dd>
+                </div>
+                <div class="code-block">
+                    my.metric(<span class="string">"Active Users"</span>, <span class="string">"1,234"</span>, color=<span class="string">"#88C0D0"</span>)
+                </div>
+                <div class="method-sample">
+                    <div style="width: 100%; margin-bottom: 20px; clear: both;">
+                        <div style="display: inline-block; border-radius: 4px; padding: 15px; box-shadow: 0 4px 4px rgba(0,0,0,0.03); min-width: 120px; text-align: center;">
+                            <div style="font-size: 14px; color: #666; font-weight: 300;">Active Users</div>
+                            <div style="font-size: 24px; color: #000000; font-weight: 700;">1,234</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sticky-note" class="method">
+                <h4>sticky_note(title, text, color="yellow", justify=False)</h4>
+                <p>Add a sticky note component with title and text.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>title (str): Title text for the sticky note</dd>
+                    <dd>text (str): Main text content</dd>
+                    <dd>color (str): Color of sticky note. Defaults to "yellow".</dd>
+                    <dd>justify (bool): Whether to justify the text. Defaults to False.</dd>
+                </div>
+                <div class="code-block">
+                    my.sticky_note(<span class="string">"Important Notice"</span>, <span class="string">"Please read this carefully."</span>, color=<span class="string">"blue"</span>)
+                </div>
+                <div class="method-sample">
+                    <div style="background-color: #FFEE8C; padding: 15px; margin: 20px 0; border-radius: 2px; min-width: 200px; max-width: 200px; min-height: 200px; display: inline-block; position: relative; box-shadow: 2px 8px 8px rgba(0,0,0,0.1); transform: rotate(0.5deg);">
+                        <div style="font-size: 18px; font-weight: 500; margin-bottom: 10px; color: #424242;">Important Notice</div>
+                        <div style="font-size: 14px; color: #616161; white-space: pre-wrap;">Please read this carefully.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="divider" class="method">
+                <h4>divider()</h4>
+                <p>Add a light grey dotted divider line.</p>
+                <div class="code-block">
+                    my.divider()
+                </div>
+                <div class="method-sample">
+                    <hr style="clear: both; border: none; border-top: 2px dotted #e0e0e0; margin: 20px 0; border-spacing: 10px;">
+                </div>
+            </section>
+
+            <section id="columns" class="method">
+                <h4>columns(n_cols)</h4>
+                <p>Create a specified number of columns for horizontal layout.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>n_cols (int): Number of columns (max 4)</dd>
+                </div>
+                <div class="code-block">
+                    cols = my.columns(<span class="string">3</span>)<br>
+                    <span class="keyword">with</span> cols[<span class="string">0</span>]:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;my.metric(<span class="string">"Metric 1"</span>, <span class="string">"100"</span>)<br>
+                    <span class="keyword">with</span> cols[<span class="string">1</span>]:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;my.metric(<span class="string">"Metric 2"</span>, <span class="string">"200"</span>)
+                </div>
+                <div class="method-sample">
+                    <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; align-items: stretch; width: 100%; margin: 10px 0; gap: 20px;">
+                        <div style="flex: 1 1 33.33%; width: 33.33%; min-width: 0; display: inline-block; vertical-align: top;">
+                            <div style="width: 100%; margin-bottom: 20px; clear: both;">
+                                <div style="display: inline-block; border-radius: 4px; padding: 15px; box-shadow: 0 4px 4px rgba(0,0,0,0.03); min-width: 120px; text-align: center;">
+                                    <div style="font-size: 14px; color: #666; font-weight: 300;">Metric 1</div>
+                                    <div style="font-size: 24px; color: #000000; font-weight: 700;">100</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="flex: 1 1 33.33%; width: 33.33%; min-width: 0; display: inline-block; vertical-align: top;">
+                            <div style="width: 100%; margin-bottom: 20px; clear: both;">
+                                <div style="display: inline-block; border-radius: 4px; padding: 15px; box-shadow: 0 4px 4px rgba(0,0,0,0.03); min-width: 120px; text-align: center;">
+                                    <div style="font-size: 14px; color: #666; font-weight: 300;">Metric 2</div>
+                                    <div style="font-size: 24px; color: #000000; font-weight: 700;">200</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="flex: 1 1 33.33%; width: 33.33%; min-width: 0; display: inline-block; vertical-align: top;">
+                            <div style="width: 100%; margin-bottom: 20px; clear: both;">
+                                <div style="display: inline-block; border-radius: 4px; padding: 15px; box-shadow: 0 4px 4px rgba(0,0,0,0.03); min-width: 120px; text-align: center;">
+                                    <div style="font-size: 14px; color: #666; font-weight: 300;">Metric 3</div>
+                                    <div style="font-size: 24px; color: #000000; font-weight: 700;">300</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dataframe" class="method">
+                <h4>dataframe(df, align='left')</h4>
+                <p>Add a styled DataFrame to the email.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>df: pandas DataFrame to display</dd>
+                    <dd>align (str): Alignment of table content - 'left', 'center', or 'right'</dd>
+                </div>
+                <div class="code-block">
+                    df = pd.DataFrame({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'95'</span>, <span class="string">'85'</span>]<br>
+                    })<br>
+                    my.dataframe(df, align=<span class="string">'center'</span>)
+                </div>
+                <div class="method-sample">
+                    <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Name</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb;">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">95</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">85</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="ftable" class="method">
+                <h4>ftable(df, conditions=None, cell_colors=None, text_colors=None, align='left')</h4>
+                <p>Add a formatted table with conditional coloring based on column values.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>df (pandas.DataFrame): The dataframe to display</dd>
+                    <dd>conditions (dict): Dictionary mapping column names to list of conditions</dd>
+                    <dd>cell_colors (dict): Same format as conditions, but for cell background colors</dd>
+                    <dd>text_colors (dict): Same format as conditions, but for text colors</dd>
+                    <dd>align (str): Text alignment - 'left', 'center', or 'right'</dd>
+                </div>
+                <div class="code-block">
+                    <span class="comment"># Example with pastel colors and conditional formatting</span><br>
+                    conditions = {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x < <span class="string">'90'</span>, <span class="string">'#ffb3ba'</span>),  <span class="comment"># Pastel red</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x >= <span class="string">'90'</span>, <span class="string">'#baffc9'</span>)   <span class="comment"># Pastel green</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Status'</span>: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x.lower() == <span class="string">'active'</span>, <span class="string">'#bae1ff'</span>),  <span class="comment"># Pastel blue</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x.lower() == <span class="string">'inactive'</span>, <span class="string">'#ffdfba'</span>)  <span class="comment"># Pastel orange</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                    }<br><br>
+                    df = pd.DataFrame({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>, <span class="string">'Bob'</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'85'</span>, <span class="string">'95'</span>, <span class="string">'75'</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Status'</span>: [<span class="string">'Active'</span>, <span class="string">'Active'</span>, <span class="string">'Inactive'</span>]<br>
+                    })<br><br>
+                    my.ftable(df, cell_colors=conditions, align=<span class="string">'center'</span>)
+                </div>
+                <div class="method-sample">
+                    <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Name</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Score</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: #ffb3ba;">85</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #bae1ff;">Active</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: #baffc9;">95</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #bae1ff;">Active</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Bob</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: #ffb3ba;">75</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #ffdfba;">Inactive</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="hyperlink" class="method">
+                <h4>hyperlink(text, url)</h4>
+                <p>Add a clickable link to the email.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>text (str): The text to display for the link</dd>
+                    <dd>url (str): The URL that the link points to</dd>
+                </div>
+                <div class="code-block">
+                    my.hyperlink(<span class="string">"Visit our website"</span>, <span class="string">"https://example.com"</span>)
+                </div>
+                <div class="method-sample">
+                    <a href="#" style="color: #2563eb; text-decoration: none;">Visit our website</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mayil</h3>
+                    <p>A beautiful HTML email generator for Python.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="docs.html">Docs</a></li>
+                        <li><a href="index.html#preview">Examples</a></li>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/issues" target="_blank">Issues</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/discussions" target="_blank">Discussions</a></li>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a></li>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/blob/main/LICENSE" target="_blank">License</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>Generated by AI, Instructed by Human | Inspired by Streamlit</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

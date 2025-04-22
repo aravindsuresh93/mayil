@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mayil - Beautiful HTML Email Generator for Python</title>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --primary-dark: #333333;
+            --accent-color: #666666;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --background: #FFFFFF;
+            --surface: #F5F5F5;
+            --code-bg: #1E1E1E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background);
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            color: var(--text-primary);
+            padding: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 300;
+            transition: opacity 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+            color: #000000;
+            padding: 4rem 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 300;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: #000000;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #F5F5F5;
+            color: #000000;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Preview Section */
+        .preview-section {
+            background-color: #F5F5F5;
+            padding: 4rem 0;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .code-examples {
+            background-color: var(--code-bg);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .preview-output {
+            background-color: var(--surface);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .preview-output h2 {
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-weight: 400;
+        }
+
+        .preview-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg);
+            color: #D4D4D4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .code-block .keyword { color: #569CD6; }
+        .code-block .string { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .function { color: #DCDCAA; }
+        .code-block .number { color: #B5CEA8; }
+        .code-block .operator { color: #D4D4D4; }
+        .code-block .punctuation { color: #D4D4D4; }
+
+        .code-examples h2 {
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-weight: 400;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+            font-weight: 400;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            font-weight: 300;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">Mayil</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="docs.html">Docs</a></li>
+                    <li><a href="https://github.com/aravindsuresh93/mayil" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Create Beautiful Emails in Python</h1>
+                    <p>Mayil is an elegant Python library that transforms your data into stunning, responsive HTML emails. With a simple API and modern design, create professional emails that work across all clients.</p>
+                    <div class="cta-buttons">
+                        <a href="docs.html" class="btn btn-secondary">
+                            Docs
+                        </a>
+                        <a href="#preview" class="btn btn-secondary">
+                            Examples
+                        </a>
+                        <a href="https://github.com/aravindsuresh93/mayil" target="_blank" class="btn btn-secondary">
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-preview">
+                    <!-- Preview will be shown here -->
+                </div>
+                
+            </div>
+            <div class="inspired-by" style="font-family: 'Courier New', monospace; color: #666666; font-size: 14px; margin: 30px 0; letter-spacing: 1px;">
+                <span style="opacity: 0.7;">INSPIRED BY</span> <a href="https://streamlit.io" target="_blank" style="color: #FF4B4B; text-decoration: none;">STREAMLIT</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="preview-section" id="preview" style="background-color: #1a1a1a;">
+        <div class="container">
+            <div class="preview-container">
+                <div class="code-examples">
+                    <h2 style="color: white;">Example Code</h2>
+                    <div class="code-block">
+                        <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                        <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br><br>
+                        <span class="comment"># Create a new email</span><br>
+                        my = Mayil()<br><br>
+                        <span class="comment"># Add a header</span><br>
+                        my.header(<span class="string">"Monthly Report"</span>)<br><br>
+                        <span class="comment"># Add metrics</span><br>
+                        my.metric(<span class="string">"Active Users"</span>, <span class="string">"1,234"</span>)<br>
+                        my.metric(<span class="string">"Conversion Rate"</span>, <span class="string">"24.5%"</span>)<br><br>
+                        <span class="comment"># Add a sticky note</span><br>
+                        my.sticky_note(<span class="string">"Important Update"</span>, <span class="string">"New features are now available!"</span>)<br><br>
+                        <span class="comment"># Add a table</span><br>
+                        df = pd.DataFrame({<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>],<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'95'</span>, <span class="string">'85'</span>]<br>
+                        })<br>
+                        my.dataframe(df, align=<span class="string">'center'</span>)
+                    </div>
+                </div>
+                <div class="preview-output">
+                    <h2>Output Preview</h2>
+                    <div class="preview-content">
+                        <h2 style="font-size: 26px; font-weight: 300; margin-bottom: 20px; color: #1a1a1a; letter-spacing: -0.5px;">Monthly Report</h2>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 20px;">
+                            <div style="width: 100%; margin-bottom: 20px; clear: both;">
+                                <div style="display: inline-block; border-radius: 4px; padding: 15px; box-shadow: 0 4px 4px rgba(0,0,0,0.03); min-width: 120px; text-align: center;">
+                                    <div style="font-size: 14px; color: #666; font-weight: 300;">Active Users</div>
+                                    <div style="font-size: 24px; color: #000000; font-weight: 700;">1,234</div>
+                                </div>
+                            </div>
+                            <div style="width: 100%; margin-bottom: 20px; clear: both;">
+                                <div style="display: inline-block; border-radius: 4px; padding: 15px; box-shadow: 0 4px 4px rgba(0,0,0,0.03); min-width: 120px; text-align: center;">
+                                    <div style="font-size: 14px; color: #666; font-weight: 300;">Conversion Rate</div>
+                                    <div style="font-size: 24px; color: #000000; font-weight: 700;">24.5%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background-color: #FFEE8C; padding: 15px; margin: 20px 0; border-radius: 2px; min-width: 200px; max-width: 200px; min-height: 200px; display: inline-block; position: relative; box-shadow: 2px 8px 8px rgba(0,0,0,0.1); transform: rotate(0.5deg);">
+                            <div style="font-size: 18px; font-weight: 500; margin-bottom: 10px; color: #424242;">Important Update</div>
+                            <div style="font-size: 14px; color: #616161; white-space: pre-wrap;">New features are now available!</div>
+                        </div>
+
+                        <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Name</th>
+                                    <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb;">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">95</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">85</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mayil</h3>
+                    <p>A beautiful HTML email generator for Python.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="docs.html">Docs</a></li>
+                        <li><a href="#preview">Examples</a></li>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/issues" target="_blank">Issues</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/discussions" target="_blank">Discussions</a></li>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a></li>
+                        <li><a href="https://github.com/aravindsuresh93/mayil/blob/main/LICENSE" target="_blank">License</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>Generated by AI, Instructed by Human</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
