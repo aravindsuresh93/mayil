@@ -277,6 +277,7 @@
                                 <li style="margin-left: 2rem;"><a href="#header">header</a></li>
                                 <li style="margin-left: 2rem;"><a href="#subheader">subheader</a></li>
                                 <li style="margin-left: 2rem;"><a href="#text">text</a></li>
+                                <li style="margin-left: 2rem;"><a href="#caption">caption</a></li>
                                 <li style="margin-left: 2rem;"><a href="#metric">metric</a></li>
                                 <li style="margin-left: 2rem;"><a href="#sticky-note">sticky_note</a></li>
                                 <li style="margin-left: 2rem;"><a href="#divider">divider</a></li>
@@ -393,6 +394,26 @@
                     <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: 400;">This is a regular paragraph.</p>
                     <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: bold; font-style: italic;">This is bold and italic text.</p>
                     <p style="font-size: 20px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: 400;">This is larger text.</p>
+                </div>
+            </section>
+
+            <section id="caption" class="method">
+                <h4>caption(text, italic=False)</h4>
+                <p>Add a caption text with smaller font size and lighter color.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>text (str): The caption text</dd>
+                    <dd>italic (bool): Whether to italicize the text. Defaults to False.</dd>
+                </div>
+                <div class="code-block">
+                    <span class="comment"># Regular caption</span><br>
+                    my.caption(<span class="string">"Figure 1: Data visualization"</span>)<br><br>
+                    <span class="comment"># Italic caption</span><br>
+                    my.caption(<span class="string">"Source: Company annual report"</span>, italic=<span class="keyword">True</span>)
+                </div>
+                <div class="method-sample">
+                    <p style="font-size: 14px; color: #666666; clear: both;">Figure 1: Data visualization</p>
+                    <p style="font-size: 14px; color: #666666; clear: both; font-style: italic;">Source: Company annual report</p>
                 </div>
             </section>
 
