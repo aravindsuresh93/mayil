@@ -29,6 +29,7 @@ setup(
         "pandas>=1.0.0",
         "jinja2>=2.11.0",
         "premailer>=3.10.0",
+        "markdown2>=2.4.0",
     ],
     include_package_data=True,
     package_data={

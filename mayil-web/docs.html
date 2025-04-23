@@ -286,6 +286,7 @@
                                 <li style="margin-left: 2rem;"><a href="#ftable">ftable</a></li>
                                 <li style="margin-left: 2rem;"><a href="#plotly-chart">plotly_chart</a></li>
                                 <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
+                                <li style="margin-left: 2rem;"><a href="#markdown">markdown</a></li>
                         </ul>
                     </details>
                 </li>
@@ -299,6 +300,13 @@
                 <div class="code-block">
                     pip install mayil
                 </div>
+                <p>Dependencies:</p>
+                <ul style="margin-left: 20px; color: #666666; margin-bottom: 1rem;">
+                    <li>pandas==1.5.3</li>
+                    <li>jinja2==3.1.2</li>
+                    <li>premailer==3.10.0</li>
+                    <li>markdown2==2.4.12 (required for markdown support)</li>
+                </ul>
             </section>
 
             <section id="quick-start">
@@ -726,6 +734,45 @@
                 </div>
                 <div class="method-sample">
                     <a href="#" style="color: #2563eb; text-decoration: none;">Visit our website</a>
+                </div>
+            </section>
+
+            <section id="markdown" class="method">
+                <h4>markdown(text)</h4>
+                <p>Convert markdown text to HTML and add it to the email body. Requires the markdown2 package.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>text (str): The markdown formatted text</dd>
+                </div>
+                <div class="code-block">
+                    <span class="comment"># Basic markdown example</span><br>
+                    my.markdown(<span class="string">"""
+# Heading 1
+## Heading 2
+
+- List item 1
+- List item 2
+
+**Bold text** and *italic text*
+
+```python
+def hello():
+    print('Hello, World!')
+```
+"""</span>)
+                </div>
+                <div class="method-sample">
+                    <div style="line-height: 1.6;">
+                        <h1 style="font-size: 2em; margin-bottom: 0.5em;">Heading 1</h1>
+                        <h2 style="font-size: 1.5em; margin-bottom: 0.5em;">Heading 2</h2>
+                        <ul style="margin-left: 20px; margin-bottom: 1em;">
+                            <li>List item 1</li>
+                            <li>List item 2</li>
+                        </ul>
+                        <p><strong>Bold text</strong> and <em>italic text</em></p>
+                        <pre style="background-color: #1E1E1E; padding: 1em; border-radius: 4px; color: #D4D4D4;"><code>def hello():
+    print('Hello, World!')</code></pre>
+                    </div>
                 </div>
             </section>
         </main>

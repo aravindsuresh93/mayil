@@ -535,6 +535,33 @@ class Mayil:
         self.body_content.append(responsive_html)
         return self
 
+    def markdown(self, text: str) -> 'Mayil':
+        """Convert markdown text to HTML and add it to the email body.
+        
+        Args:
+            text (str): The markdown formatted text
+            
+        Returns:
+            Mayil: The Mayil instance for method chaining
+        """
+        try:
+            import markdown2
+        except ImportError:
+            raise ImportError("The markdown2 package is required for markdown support. Install it with 'pip install markdown2'")
+
+        # Convert markdown to HTML
+        html = markdown2.markdown(text, extras=['fenced-code-blocks', 'tables', 'break-on-newline'])
+        
+        # Add some basic styling
+        styled_html = f"""
+        <div class="markdown" style="line-height: 1.6;">
+            {html}
+        </div>
+        """
+        
+        self.body_content.append(styled_html)
+        return self
+
     @property
     def body(self):
         """Get the complete HTML body of the email."""

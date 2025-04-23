@@ -19,6 +19,7 @@ table = _default_instance.table
 ftable = _default_instance.ftable
 hyperlink = _default_instance.hyperlink
 plotly_chart = _default_instance.plotly_chart
+markdown = _default_instance.markdown
 
 # Create a function to get the current body content
 def body():
@@ -44,5 +45,6 @@ __all__ = [
     "ftable",
     "hyperlink",
     "body",
-    "plotly_chart"
+    "plotly_chart",
+    "markdown"
 ] 

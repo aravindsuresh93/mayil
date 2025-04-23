@@ -129,6 +129,31 @@ def create_sample_email():
     my.text("- Enhanced security measures", italic=True)
     my.text("- Improved user interface", font_size=38)
     my.text("- Faster processing times", underline=True)
+
+    my.markdown("""
+# Key Takeaways
+
+## Performance Improvements
+- **30% faster** load times
+- Optimized database queries
+- Reduced memory usage
+
+## New Features
+1. Real-time analytics dashboard
+2. Enhanced reporting capabilities
+3. Custom alert configurations
+
+> "The latest updates have significantly improved our workflow" - Lead Developer
+
+### Technical Details
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Backend   | ✅ Done | All tests passing |
+| Frontend  | 🚧 WIP | Final UI polish |
+| API       | ✅ Done | Documentation updated |
+
+Visit our [documentation](https://docs.example.com) for more details.
+""")
     
     return my
 
