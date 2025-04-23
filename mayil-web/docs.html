@@ -304,16 +304,17 @@
                 <h2>Quick Start</h2>
                 <p>Here's a simple example to get you started:</p>
                 <div class="code-block">
-                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    <span class="keyword">import</span> mayil <span class="keyword">as</span> my<br>
                     <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br><br>
-                    <span class="comment"># Create a new email</span><br>
-                    my = Mayil()<br><br>
                     <span class="comment"># Add content</span><br>
                     my.title(<span class="string">"Welcome to Our Newsletter"</span>)<br>
                     my.header(<span class="string">"Latest Updates"</span>)<br>
                     my.text(<span class="string">"Stay informed with our latest news and updates."</span>)<br><br>
                     <span class="comment"># Get the HTML content</span><br>
-                    html_content = my.body
+                    html_content = my.body()<br><br>
+                    <span class="comment"># Save to file (optional)</span><br>
+                    with open(<span class="string">"email.html"</span>, <span class="string">"w"</span>) as f:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;f.write(html_content)
                 </div>
             </section>
 
@@ -482,9 +483,9 @@
                 </div>
             </section>
 
-            <section id="table" class="method">
-                <h4>table(df, align='left')</h4>
-                <p>Add a styled table to the email.</p>
+            <section id="dataframe" class="method">
+                <h4>dataframe(df, align='left')</h4>
+                <p>Add a styled DataFrame to the email.</p>
                 <div class="method-params">
                     <dt>Parameters:</dt>
                     <dd>df: pandas DataFrame to display</dd>
@@ -495,7 +496,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>],<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'95'</span>, <span class="string">'85'</span>]<br>
                     })<br>
-                    my.table(df, align=<span class="string">'center'</span>)
+                    my.dataframe(df, align=<span class="string">'center'</span>)
                 </div>
                 <div class="method-sample">
                     <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
