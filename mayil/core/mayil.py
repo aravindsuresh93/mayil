@@ -562,6 +562,25 @@ class Mayil:
         self.body_content.append(styled_html)
         return self
 
+    def show(self) -> None:
+        """Preview the email body in the default web browser.
+        
+        Opens the current email body content directly in a new browser tab.
+        """
+        import webbrowser
+        from pathlib import Path
+        
+        # Create preview directory if it doesn't exist
+        preview_dir = Path.home() / '.mayil' / 'preview'
+        preview_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Save preview.html in the preview directory
+        preview_path = preview_dir / 'preview.html'
+        preview_path.write_text(self.body, encoding='utf-8')
+        
+        # Open in browser
+        webbrowser.open(f'file://{preview_path}')
+
     @property
     def body(self):
         """Get the complete HTML body of the email."""

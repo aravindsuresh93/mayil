@@ -131,30 +131,31 @@ def create_sample_email():
     my.text("- Faster processing times", underline=True)
 
     my.markdown("""
-# Key Takeaways
+                # Key Takeaways
 
-## Performance Improvements
-- **30% faster** load times
-- Optimized database queries
-- Reduced memory usage
+                ## Performance Improvements
+                - **30% faster** load times
+                - Optimized database queries
+                - Reduced memory usage
 
-## New Features
-1. Real-time analytics dashboard
-2. Enhanced reporting capabilities
-3. Custom alert configurations
+                ## New Features
+                1. Real-time analytics dashboard
+                2. Enhanced reporting capabilities
+                3. Custom alert configurations
 
-> "The latest updates have significantly improved our workflow" - Lead Developer
+                > "The latest updates have significantly improved our workflow" - Lead Developer
 
-### Technical Details
-| Component | Status | Notes |
-|-----------|--------|-------|
-| Backend   | ✅ Done | All tests passing |
-| Frontend  | 🚧 WIP | Final UI polish |
-| API       | ✅ Done | Documentation updated |
+                ### Technical Details
+                | Component | Status | Notes |
+                |-----------|--------|-------|
+                | Backend   | ✅ Done | All tests passing |
+                | Frontend  | 🚧 WIP | Final UI polish |
+                | API       | ✅ Done | Documentation updated |
 
-Visit our [documentation](https://docs.example.com) for more details.
-""")
+                Visit our [documentation](https://docs.example.com) for more details.
+                """)
     
+    my.show()
     return my
 
 def save_to_file(html_content, filename="sample_email.html"):

@@ -287,6 +287,7 @@
                                 <li style="margin-left: 2rem;"><a href="#plotly-chart">plotly_chart</a></li>
                                 <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
                                 <li style="margin-left: 2rem;"><a href="#markdown">markdown</a></li>
+                                <li style="margin-left: 2rem;"><a href="#show">show</a></li>
                         </ul>
                     </details>
                 </li>
@@ -772,6 +773,27 @@ def hello():
                         <p><strong>Bold text</strong> and <em>italic text</em></p>
                         <pre style="background-color: #1E1E1E; padding: 1em; border-radius: 4px; color: #D4D4D4;"><code>def hello():
     print('Hello, World!')</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="show" class="method">
+                <h4>show()</h4>
+                <p>Preview the email body in the default web browser. Opens the current email body content directly in a new browser tab.</p>
+                <div class="method-params">
+                    <dt>Returns:</dt>
+                    <dd>None</dd>
+                </div>
+                <div class="code-block">
+                    <span class="comment"># Create email content</span><br>
+                    my.title(<span class="string">"Welcome"</span>)<br>
+                    my.text(<span class="string">"Hello, World!"</span>)<br><br>
+                    <span class="comment"># Preview in browser</span><br>
+                    my.show()
+                </div>
+                <div class="method-sample">
+                    <div style="background-color: #f5f5f5; padding: 12px; border-radius: 4px; font-family: monospace; color: #666;">
+                        Opens preview.html in your default web browser
                     </div>
                 </div>
             </section>
