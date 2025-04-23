@@ -287,6 +287,8 @@
                                 <li style="margin-left: 2rem;"><a href="#plotly-chart">plotly_chart</a></li>
                                 <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
                                 <li style="margin-left: 2rem;"><a href="#markdown">markdown</a></li>
+                                <li style="margin-left: 2rem;"><a href="#image">image</a></li>
+                                <li style="margin-left: 2rem;"><a href="#signature">signature</a></li>
                                 <li style="margin-left: 2rem;"><a href="#show">show</a></li>
                         </ul>
                     </details>
@@ -773,6 +775,85 @@ def hello():
                         <p><strong>Bold text</strong> and <em>italic text</em></p>
                         <pre style="background-color: #1E1E1E; padding: 1em; border-radius: 4px; color: #D4D4D4;"><code>def hello():
     print('Hello, World!')</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="image" class="method">
+                <h4>image(source, alt_text=None, width=None, height=None)</h4>
+                <p>Add an image to the email body. Supports local files, URLs, and base64 encoded images.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>source (str): Path to local image file, URL to image, or base64 encoded image data</dd>
+                    <dd>alt_text (str, optional): Alternative text for the image</dd>
+                    <dd>width (str/int, optional): Width of the image (e.g., "100%", 500)</dd>
+                    <dd>height (str/int, optional): Height of the image (e.g., "auto", 300)</dd>
+                </div>
+                <div class="code-block">
+                    <span class="comment"># Local image file</span><br>
+                    my.image(<span class="string">"path/to/image.jpg"</span>, alt_text=<span class="string">"Company Logo"</span>)<br><br>
+                    <span class="comment"># Image from URL</span><br>
+                    my.image(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"https://example.com/image.png"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;width=<span class="string">"100%"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;height=<span class="string">"auto"</span><br>
+                    )<br><br>
+                    <span class="comment"># Base64 encoded image</span><br>
+                    my.image(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA..."</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;width=<span class="number">300</span><br>
+                    )
+                </div>
+                <div class="method-sample">
+                    <div style="margin: 10px 0;">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNmMGYwZjAiLz4KPHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjY2NjY2Ij5TYW1wbGUgSW1hZ2U8L3RleHQ+Cjwvc3ZnPg==" 
+                             alt="Sample Image" 
+                             style="max-width: 100%; height: auto; border: 1px solid #eee; border-radius: 4px;">
+                    </div>
+                    <p style="color: #666666; font-size: 12px; margin-top: 5px;">Images are automatically optimized and embedded in the email</p>
+                </div>
+            </section>
+
+            <section id="signature" class="method">
+                <h4>signature(salutation="Best regards,", name=None, designation=None, signature_image=None)</h4>
+                <p>Add a professional email signature at the end of the email. Supports text-based signatures and image signatures (including SVG).</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>salutation (str, optional): The salutation to use. Defaults to "Best regards,"</dd>
+                    <dd>name (str, optional): The name to display in the signature</dd>
+                    <dd>designation (str, optional): The designation/title/position to display under the name</dd>
+                    <dd>signature_image (str, optional): Path to signature image file (jpg/png) or SVG content, or URL to image</dd>
+                </div>
+                <div class="code-block">
+                    <span class="comment"># Basic text signature</span><br>
+                    my.signature(<span class="string">"Best regards,"</span>, <span class="string">"John Doe"</span>, <span class="string">"Senior Software Engineer"</span>)<br><br>
+                    <span class="comment"># With image signature (local file)</span><br>
+                    my.signature(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;name=<span class="string">"John Doe"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;designation=<span class="string">"Senior Software Engineer"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;signature_image=<span class="string">"path/to/signature.png"</span><br>
+                    )<br><br>
+                    <span class="comment"># With SVG signature</span><br>
+                    my.signature(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;name=<span class="string">"John Doe"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;signature_image=<span class="string">'''&lt;svg width="200" height="40"&gt;...&lt;/svg&gt;'''</span><br>
+                    )<br><br>
+                    <span class="comment"># With image URL</span><br>
+                    my.signature(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;signature_image=<span class="string">"https://example.com/signature.jpg"</span><br>
+                    )
+                </div>
+                <div class="method-sample">
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                        <p style="color: #666666; margin: 0; font-size: 14px;">Best regards,</p>
+                        <p style="margin: 10px 0 5px 0; color: #2c3e50; font-weight: 500;">John Doe</p>
+                        <p style="margin: 0; color: #666666; font-size: 12px;">Senior Software Engineer</p>
+                        <div style="margin: 10px 0;">
+                            <svg width="200" height="40" viewBox="0 0 200 40" style="max-width: 500px; max-height: 40px;">
+                                <path d="M20,30 Q40,10 60,30 T100,30" stroke="#2c3e50" fill="none" stroke-width="2"/>
+                                <text x="110" y="25" font-family="cursive" font-size="16" fill="#666666">John Doe</text>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </section>

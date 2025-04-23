@@ -581,6 +581,118 @@ class Mayil:
         # Open in browser
         webbrowser.open(f'file://{preview_path}')
 
+    def save(self, path: str) -> None:
+        """Save the email body to a file.
+        
+        Args:
+            path (str): The path to save the email body
+        """
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(self.body)
+
+    def image(self, source: str, width: str = "100%", height: str = "auto") -> "Mayil":
+        """Add an image to the email body.
+        
+        Args:
+            source (str): The image source - either a URL or local file path
+            width (str): Width of the image (e.g. "500px", "100%", "auto")
+            height (str): Height of the image (e.g. "300px", "auto") 
+            
+        Returns:
+            Mayil: The Mayil instance for method chaining
+        """
+        import base64
+        import mimetypes
+        from pathlib import Path
+        from urllib.parse import urlparse
+
+        # Check if source is URL or local path
+        is_url = bool(urlparse(source).scheme)
+
+        if is_url:
+            # For URLs, use the source directly
+            img_html = f'<img src="{source}" style="width: {width}; height: {height};">'
+        else:
+            # For local files, embed as base64
+            img_path = Path(source)
+            if not img_path.exists():
+                raise FileNotFoundError(f"Image file not found: {source}")
+
+            # Get mime type
+            mime_type, _ = mimetypes.guess_type(source)
+            if not mime_type or not mime_type.startswith('image/'):
+                raise ValueError(f"Invalid image file: {source}")
+
+            # Read and encode image
+            with open(source, 'rb') as img_file:
+                img_data = base64.b64encode(img_file.read()).decode('utf-8')
+
+            img_html = f'<img src="data:{mime_type};base64,{img_data}" style="width: {width}; height: {height};">'
+
+        self.body_content.append(img_html)
+        return self
+
+    def signature(self, salutation: str = "Best regards,", name: str = None, designation: str = None, signature_image: str = None) -> 'Mayil':
+        """Add a professional email signature.
+        
+        Args:
+            salutation (str, optional): The salutation to use. Defaults to "Best regards,"
+            name (str): The name to display in the signature
+            designation (str, optional): The designation/title/position to display under the name
+            signature_image (str, optional): Path to signature image file (jpg/png) or SVG content
+            
+        Returns:
+            Mayil: The Mayil instance for method chaining
+        """
+        import base64
+        import mimetypes
+        from pathlib import Path
+        from urllib.parse import urlparse
+
+        signature_html = '<div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">'
+
+        # Add salutation if provided
+        if salutation:
+            signature_html += f'<p style="color: #666666; margin: 0; font-size: 14px;">{salutation}</p>'
+
+        # Add text signature if name provided
+        if name:
+            signature_html += f'<p style="margin: 10px 0 5px 0; color: #2c3e50; font-weight: 500;">{name}</p>'
+            if designation:
+                signature_html += f'<p style="margin: 0; color: #666666; font-size: 12px;">{designation}</p>'
+
+        # Handle signature image if provided
+        if signature_image:
+            if signature_image.lower().endswith('.svg'):
+                # For SVG files or content
+                if Path(signature_image).exists():
+                    with open(signature_image, 'r') as f:
+                        svg_content = f.read()
+                else:
+                    svg_content = signature_image
+                signature_html += f'<div style="margin: 10px 0; max-width: 500px; max-height: 40px;">{svg_content}</div>'
+            else:
+                # For other image types
+                is_url = bool(urlparse(signature_image).scheme)
+                if is_url:
+                    signature_html += f'<img src="{signature_image}" style="max-width: 500px; max-height: 40px; margin: 10px 0; object-fit: contain;">'
+                else:
+                    img_path = Path(signature_image)
+                    if not img_path.exists():
+                        raise FileNotFoundError(f"Signature image not found: {signature_image}")
+                    
+                    mime_type, _ = mimetypes.guess_type(signature_image)
+                    if not mime_type or not mime_type.startswith('image/'):
+                        raise ValueError(f"Invalid image file: {signature_image}")
+                    
+                    with open(signature_image, 'rb') as img_file:
+                        img_data = base64.b64encode(img_file.read()).decode('utf-8')
+                    signature_html += f'<img src="data:{mime_type};base64,{img_data}" style="max-width: 500px; max-height: 40px; margin: 10px 0; object-fit: contain;">'
+
+        signature_html += '</div>'
+        self.body_content.append(signature_html)
+        return self
+
     @property
     def body(self):
         """Get the complete HTML body of the email."""

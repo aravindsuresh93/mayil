@@ -21,6 +21,9 @@ hyperlink = _default_instance.hyperlink
 plotly_chart = _default_instance.plotly_chart
 markdown = _default_instance.markdown
 show = _default_instance.show
+save = _default_instance.save
+image = _default_instance.image
+signature = _default_instance.signature
 
 # Create a function to get the current body content
 def body():
@@ -48,5 +51,8 @@ __all__ = [
     "body",
     "plotly_chart",
     "markdown",
-    "show"
+    "show",
+    "save",
+    "image",
+    "signature"
 ] 

@@ -154,7 +154,24 @@ def create_sample_email():
 
                 Visit our [documentation](https://docs.example.com) for more details.
                 """)
+
+    my.header("Image Examples")
     
+    # Test local image
+    my.text("Local image with custom dimensions:")
+    my.image("/Users/aravsure/Desktop/ss.png")
+    
+    # Test URL image
+    my.text("Remote image with auto dimensions:")
+    my.image("https://images.ctfassets.net/lzny33ho1g45/42FwAGsDwSUT5QaU1vetqh/d9db625f9e0ecb11cee7c0a60c177ce4/google_app_tips2.png?w=1520&fm=jpg&q=31&fit=thumb&h=760", width="100%")
+    
+    # Test responsive image
+    # my.text("Responsive image that scales with container:")
+    # my.image("tests/responsive.png", width="100%")
+
+    my.signature('Best regards,', "John Doe", signature_image=  )
+    
+
     my.show()
     return my
 
