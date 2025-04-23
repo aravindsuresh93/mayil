@@ -125,10 +125,10 @@ def create_sample_email():
     my.divider()
 
     my.header("Latest Updates")
-    my.text("We've added new features to our platform:")
-    my.text("- Enhanced security measures")
-    my.text("- Improved user interface")
-    my.text("- Faster processing times")
+    my.text("We've added new features to our platform:", bold=True)
+    my.text("- Enhanced security measures", italic=True)
+    my.text("- Improved user interface", font_size=38)
+    my.text("- Faster processing times", underline=True)
     
     return my
 

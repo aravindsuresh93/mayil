@@ -92,11 +92,35 @@ class Mayil:
         self.body_content.append(f'<h1 class="subheader">{text}</h1>')
         return self
 
-    def text(self, text, justify=False):
-        """Add text to the email body."""
+    def text(self, text, justify=False, italic=False, bold=False, underline=False, font_size=None):
+        """Add text to the email body.
+        
+        Args:
+            text (str): The text content
+            justify (bool): Whether to justify the text. Defaults to False
+            italic (bool): Whether to italicize the text. Defaults to False
+            bold (bool): Whether to bold the text. Defaults to False 
+            underline (bool): Whether to underline the text. Defaults to False
+            font_size (int): Custom font size in pixels. Defaults to None
+        """
         formatted_text = text.replace('\n', '<br>')
-        style = "text-align: justify;" if justify else ""
-        self.body_content.append(f'<p class="text" style="clear: both; {style}">{formatted_text}</p>')
+        style = []
+        
+        if justify:
+            style.append("text-align: justify;")
+        if italic:
+            style.append("font-style: italic;")
+        if bold:
+            style.append("font-weight: bold;")
+        if underline:
+            style.append("text-decoration: underline;")
+        if font_size:
+            style.append(f"font-size: {font_size}px;")
+            
+        style.append("clear: both;")
+        style_str = " ".join(style)
+        
+        self.body_content.append(f'<p class="text" style="{style_str}">{formatted_text}</p>')
         return self
 
     def caption(self, text, italics=False):
@@ -350,7 +374,7 @@ class Mayil:
                     for i, rule in enumerate(rules):
                         try:
                             condition_func, color = rule
-                            class_name = f'{style_prop}-{col}-{i}'
+                            class_name = f'{style_prop}-{str(hash(str(col)))[:5]}-{i}'
                             
                             # Convert color to rgba if opacity specified
                             if opacity:

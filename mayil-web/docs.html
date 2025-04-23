@@ -370,18 +370,29 @@
             </section>
 
             <section id="text" class="method">
-                <h4>text(text, justify=False)</h4>
+                <h4>text(text, justify=False, italic=False, bold=False, underline=False, font_size=None)</h4>
                 <p>Add text to the email body.</p>
                 <div class="method-params">
                     <dt>Parameters:</dt>
                     <dd>text (str): The text content</dd>
                     <dd>justify (bool): Whether to justify the text. Defaults to False.</dd>
+                    <dd>italic (bool): Whether to italicize the text. Defaults to False.</dd>
+                    <dd>bold (bool): Whether to bold the text. Defaults to False.</dd>
+                    <dd>underline (bool): Whether to underline the text. Defaults to False.</dd>
+                    <dd>font_size (int): Custom font size in pixels. Defaults to None.</dd>
                 </div>
                 <div class="code-block">
-                    my.text(<span class="string">"This is a paragraph of text."</span>, justify=<span class="keyword">True</span>)
+                    <span class="comment"># Basic text</span><br>
+                    my.text(<span class="string">"This is a regular paragraph."</span>)<br><br>
+                    <span class="comment"># Styled text</span><br>
+                    my.text(<span class="string">"This is bold and italic text."</span>, bold=<span class="keyword">True</span>, italic=<span class="keyword">True</span>)<br><br>
+                    <span class="comment"># Custom sized text</span><br>
+                    my.text(<span class="string">"This is larger text."</span>, font_size=<span class="number">20</span>)
                 </div>
                 <div class="method-sample">
-                    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: 400; text-align: justify;">This is a paragraph of text.</p>
+                    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: 400;">This is a regular paragraph.</p>
+                    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: bold; font-style: italic;">This is bold and italic text.</p>
+                    <p style="font-size: 20px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: 400;">This is larger text.</p>
                 </div>
             </section>
 

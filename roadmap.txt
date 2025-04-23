@@ -1,0 +1,4 @@
+text
+    text italic
+    font size
+    underline
