@@ -123,10 +123,10 @@ class Mayil:
         self.body_content.append(f'<p class="text" style="{style_str}">{formatted_text}</p>')
         return self
 
-    def caption(self, text, italics=False):
+    def caption(self, text, italic=False):
         """Add a caption text with smaller font size and lighter color."""
         style = "font-size: 14px; color: #666666; clear: both;"
-        if italics:
+        if italic:
             style += " font-style: italic;"
         self.body_content.append(f'<p class="text" style="{style}">{text}</p>')
         return self
