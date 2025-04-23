@@ -281,7 +281,7 @@
                                 <li style="margin-left: 2rem;"><a href="#sticky-note">sticky_note</a></li>
                                 <li style="margin-left: 2rem;"><a href="#divider">divider</a></li>
                                 <li style="margin-left: 2rem;"><a href="#columns">columns</a></li>
-                                <li style="margin-left: 2rem;"><a href="#dataframe">dataframe</a></li>
+                                <li style="margin-left: 2rem;"><a href="#table">table</a></li>
                                 <li style="margin-left: 2rem;"><a href="#ftable">ftable</a></li>
                                 <li style="margin-left: 2rem;"><a href="#plotly-chart">plotly_chart</a></li>
                                 <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
@@ -482,9 +482,9 @@
                 </div>
             </section>
 
-            <section id="dataframe" class="method">
-                <h4>dataframe(df, align='left')</h4>
-                <p>Add a styled DataFrame to the email.</p>
+            <section id="table" class="method">
+                <h4>table(df, align='left')</h4>
+                <p>Add a styled table to the email.</p>
                 <div class="method-params">
                     <dt>Parameters:</dt>
                     <dd>df: pandas DataFrame to display</dd>
@@ -495,7 +495,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>],<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'95'</span>, <span class="string">'85'</span>]<br>
                     })<br>
-                    my.dataframe(df, align=<span class="string">'center'</span>)
+                    my.table(df, align=<span class="string">'center'</span>)
                 </div>
                 <div class="method-sample">
                     <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
