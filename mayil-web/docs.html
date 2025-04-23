@@ -287,6 +287,7 @@
                                 <li style="margin-left: 2rem;"><a href="#plotly-chart">plotly_chart</a></li>
                                 <li style="margin-left: 2rem;"><a href="#hyperlink">hyperlink</a></li>
                                 <li style="margin-left: 2rem;"><a href="#markdown">markdown</a></li>
+                                <li style="margin-left: 2rem;"><a href="#mention">mention</a></li>
                                 <li style="margin-left: 2rem;"><a href="#image">image</a></li>
                                 <li style="margin-left: 2rem;"><a href="#signature">signature</a></li>
                                 <li style="margin-left: 2rem;"><a href="#show">show</a></li>
@@ -775,6 +776,35 @@ def hello():
                         <p><strong>Bold text</strong> and <em>italic text</em></p>
                         <pre style="background-color: #1E1E1E; padding: 1em; border-radius: 4px; color: #D4D4D4;"><code>def hello():
     print('Hello, World!')</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mention" class="method">
+                <h4>mention(emails, color=None)</h4>
+                <p>Add @mentions with email addresses in colorful rounded boxes. Creates visually appealing mention tags for email addresses.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>emails (list): List of email addresses to mention</dd>
+                    <dd>color (str, optional): Hex color code to use for all mentions. If not provided, random neon colors will be used.</dd>
+                </div>
+                <div class="code-block">
+                    <span class="comment"># Basic mentions with random colors</span><br>
+                    my.mention([<span class="string">"john@example.com"</span>, <span class="string">"jane@example.com"</span>])<br><br>
+                    <span class="comment"># Mentions with custom color</span><br>
+                    my.mention(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">"support@example.com"</span>, <span class="string">"sales@example.com"</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;color=<span class="string">"#0070F3"</span><br>
+                    )
+                </div>
+                <div class="method-sample">
+                    <div style="margin: 10px 0;">
+                        <span style="display: inline-block; background-color: #FF3B3B10; color: #FF3B3B; padding: 4px 12px; border-radius: 20px; margin: 0 5px 5px 0; font-size: 14px; border: 1px solid #FF3B3B44;">@john@example.com</span>
+                        <span style="display: inline-block; background-color: #7928CA10; color: #7928CA; padding: 4px 12px; border-radius: 20px; margin: 0 5px 5px 0; font-size: 14px; border: 1px solid #7928CA44;">@jane@example.com</span>
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <span style="display: inline-block; background-color: #0070F310; color: #0070F3; padding: 4px 12px; border-radius: 20px; margin: 0 5px 5px 0; font-size: 14px; border: 1px solid #0070F344;">@support@example.com</span>
+                        <span style="display: inline-block; background-color: #0070F310; color: #0070F3; padding: 4px 12px; border-radius: 20px; margin: 0 5px 5px 0; font-size: 14px; border: 1px solid #0070F344;">@sales@example.com</span>
                     </div>
                 </div>
             </section>

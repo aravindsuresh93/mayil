@@ -24,6 +24,7 @@ show = _default_instance.show
 save = _default_instance.save
 image = _default_instance.image
 signature = _default_instance.signature
+mention = _default_instance.mention
 
 # Create a function to get the current body content
 def body():
@@ -54,5 +55,6 @@ __all__ = [
     "show",
     "save",
     "image",
-    "signature"
+    "signature",
+    "mention"
 ] 

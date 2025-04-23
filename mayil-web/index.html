@@ -330,6 +330,8 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;title=<span class="string">'User Engagement vs. Satisfaction'</span>,<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;color_continuous_scale=<span class="string">'viridis'</span>)<br>
                         my.plotly_chart(fig)<br><br>
+                        <span class="comment"># Add mentions</span><br>
+                        my.mention([<span class="string">"team@example.com"</span>, <span class="string">"dev@example.com"</span>], color=<span class="string">"#4A148C"</span>)<br><br>
                         <span class="comment"># Add a sticky note</span><br>
                         my.sticky_note(<span class="string">"Important Update"</span>, <span class="string">"New features are now available!"</span>)<br><br>
                         <span class="comment"># Add a table</span><br>
@@ -432,6 +434,12 @@
                                     </svg>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Mentions Preview -->
+                        <div style="margin: 10px 0;">
+                            <span style="display: inline-block; background-color: #4A148C10; color: #4A148C; padding: 4px 12px; border-radius: 20px; margin: 0 5px 5px 0; font-size: 14px; border: 1px solid #4A148C44;">@team@example.com</span>
+                            <span style="display: inline-block; background-color: #4A148C10; color: #4A148C; padding: 4px 12px; border-radius: 20px; margin: 0 5px 5px 0; font-size: 14px; border: 1px solid #4A148C44;">@dev@example.com</span>
                         </div>
 
                         <div style="background-color: #FFEE8C; padding: 15px; margin: 20px 0; border-radius: 2px; min-width: 200px; max-width: 200px; min-height: 200px; display: inline-block; position: relative; box-shadow: 2px 8px 8px rgba(0,0,0,0.1); transform: rotate(0.5deg);">

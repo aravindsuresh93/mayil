@@ -693,6 +693,63 @@ class Mayil:
         self.body_content.append(signature_html)
         return self
 
+    def mention(self, emails, color=None):
+        """Add @mentions with email addresses in colorful rounded boxes.
+        
+        Args:
+            emails (list): List of email addresses to mention
+            color (str, optional): Hex color code to use for all mentions. If not provided, random colors will be used.
+        """
+        import random
+
+        # Neon colors for mentions
+        neon_colors = [
+            "#FF3B3B", # Bright red
+            "#FF2B93", # Hot pink
+            "#7928CA", # Vibrant purple
+            "#0070F3", # Bright blue
+            "#00C853", # Emerald green
+            "#FF6D00", # Bright orange
+            "#00B8D4", # Cyan blue
+            "#6200EA", # Deep purple
+            "#2962FF", # Royal blue
+            "#00C853", # Bright green
+            "#D50000", # Pure red
+            "#C51162", # Deep pink
+            "#AA00FF", # Electric purple
+            "#00BFA5", # Teal
+            "#FFD600", # Bright yellow
+            "#FF3D00", # Deep orange
+            "#1DE9B6", # Light teal
+            "#00E5FF", # Light blue
+            "#651FFF", # Violet
+            "#F50057"  # Pink red
+        ]
+
+        mentions_html = '<div style="margin: 10px 0;">'
+        
+        for email in emails:
+            # Use provided color or pick random neon color
+            mention_color = color if color else random.choice(neon_colors)
+            
+            # Create mention box with rounded corners and glow effect
+            mentions_html += f"""
+                <span style="
+                    display: inline-block;
+                    background-color: {mention_color}10;
+                    color: {mention_color};
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    margin: 0 5px 5px 0;
+                    font-size: 14px;
+                    border: 1px solid {mention_color}44;
+                ">@{email}</span>
+            """
+
+        mentions_html += '</div>'
+        self.body_content.append(mentions_html)
+        return self
+
     @property
     def body(self):
         """Get the complete HTML body of the email."""

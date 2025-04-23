@@ -156,6 +156,9 @@ def create_sample_email():
                 """)
 
     my.header("Image Examples")
+
+    my.text("Team members involved:")
+    my.mention(["john.doe@example.com", "jane.smith@example.com", "bob.wilson@example.com"])
     
     # Test local image
     my.text("Local image with custom dimensions:")
@@ -169,7 +172,7 @@ def create_sample_email():
     # my.text("Responsive image that scales with container:")
     # my.image("tests/responsive.png", width="100%")
 
-    my.signature('Best regards,', "John Doe", signature_image=  )
+    my.signature('Best regards,', "John Doe"  )
     
 
     my.show()
