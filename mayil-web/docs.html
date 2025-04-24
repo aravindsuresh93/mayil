@@ -317,17 +317,14 @@
                 <h2>Quick Start</h2>
                 <p>Here's a simple example to get you started:</p>
                 <div class="code-block">
-                    <span class="keyword">import</span> mayil <span class="keyword">as</span> my<br>
-                    <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br><br>
-                    <span class="comment"># Add content</span><br>
-                    my.title(<span class="string">"Welcome to Our Newsletter"</span>)<br>
-                    my.header(<span class="string">"Latest Updates"</span>)<br>
-                    my.text(<span class="string">"Stay informed with our latest news and updates."</span>)<br><br>
-                    <span class="comment"># Get the HTML content</span><br>
-                    html_content = my.body()<br><br>
-                    <span class="comment"># Save to file (optional)</span><br>
-                    with open(<span class="string">"email.html"</span>, <span class="string">"w"</span>) as f:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;f.write(html_content)
+                    <span class="comment"># Import Mayil</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
+                    <span class="comment"># Create a simple email</span><br>
+                    my.title(<span class="string">"Welcome to Mayil"</span>)<br>
+                    my.text(<span class="string">"This is a simple email created with Mayil."</span>)<br><br>
+                    <span class="comment"># Optional: Save to file</span><br>
+                    my.save(<span class="string">"welcome.html"</span>)
                 </div>
             </section>
 
@@ -536,11 +533,17 @@
                     <dd>align (str): Alignment of table content - 'left', 'center', or 'right'</dd>
                 </div>
                 <div class="code-block">
+                    <span class="comment"># Import required libraries</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br><br>
+                    my = Mayil()<br><br>
+                    <span class="comment"># Create sample DataFrame</span><br>
                     df = pd.DataFrame({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'95'</span>, <span class="string">'85'</span>]<br>
-                    })<br>
-                    my.dataframe(df, align=<span class="string">'center'</span>)
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>, <span class="string">'Bob'</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>]<br>
+                    })<br><br>
+                    <span class="comment"># Add DataFrame to email</span><br>
+                    my.dataframe(df)
                 </div>
                 <div class="method-sample">
                     <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
@@ -553,11 +556,15 @@
                         <tbody>
                             <tr>
                                 <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">95</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">85</td>
                             </tr>
                             <tr>
                                 <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">85</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">92</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Bob</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">78</td>
                             </tr>
                         </tbody>
                     </table>
@@ -576,48 +583,43 @@
                     <dd>align (str): Text alignment - 'left', 'center', or 'right'</dd>
                 </div>
                 <div class="code-block">
-                    <span class="comment"># Example with pastel colors and conditional formatting</span><br>
-                    conditions = {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x < <span class="string">'90'</span>, <span class="string">'#ffb3ba'</span>),  <span class="comment"># Pastel red</span><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x >= <span class="string">'90'</span>, <span class="string">'#baffc9'</span>)   <span class="comment"># Pastel green</span><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Status'</span>: [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x.lower() == <span class="string">'active'</span>, <span class="string">'#bae1ff'</span>),  <span class="comment"># Pastel blue</span><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x.lower() == <span class="string">'inactive'</span>, <span class="string">'#ffdfba'</span>)  <span class="comment"># Pastel orange</span><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;]<br>
-                    }<br><br>
+                    <span class="comment"># Import required libraries</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br><br>
+                    my = Mayil()<br><br>
+                    <span class="comment"># Create sample DataFrame</span><br>
                     df = pd.DataFrame({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>, <span class="string">'Bob'</span>],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="string">'85'</span>, <span class="string">'95'</span>, <span class="string">'75'</span>],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Status'</span>: [<span class="string">'Active'</span>, <span class="string">'Active'</span>, <span class="string">'Inactive'</span>]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Product'</span>: [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Sales'</span>: [<span class="number">1500</span>, <span class="number">800</span>, <span class="number">2000</span>]<br>
                     })<br><br>
-                    my.ftable(df, cell_colors=conditions, align=<span class="string">'center'</span>)
+                    <span class="comment"># Add table with conditional formatting</span><br>
+                    my.table(df, conditions={<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Sales'</span>: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'above'</span>: [<span class="number">1000</span>, <span class="string">'#4CAF50'</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'below'</span>: [<span class="number">1000</span>, <span class="string">'#F44336'</span>]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    })
                 </div>
                 <div class="method-sample">
                     <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
                         <thead>
                             <tr>
-                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Name</th>
-                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Score</th>
-                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb;">Status</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Product</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Sales</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: #ffb3ba;">85</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #bae1ff;">Active</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">A</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #4CAF50;">1500</td>
                             </tr>
                             <tr>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: #baffc9;">95</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #bae1ff;">Active</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">B</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #F44336;">800</td>
                             </tr>
                             <tr>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Bob</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: #ffb3ba;">75</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #ffdfba;">Inactive</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">C</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #4CAF50;">2000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -632,14 +634,14 @@
                     <dd>fig (plotly.graph_objects.Figure): The Plotly figure to display</dd>
                 </div>
                 <div class="code-block">
+                    <span class="comment"># Import required libraries</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
                     <span class="keyword">import</span> plotly.express <span class="keyword">as</span> px<br><br>
-                    <span class="comment"># Create a sample plotly figure</span><br>
-                    df = pd.DataFrame({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Date'</span>: pd.date_range(<span class="string">'2024-01-01'</span>, <span class="string">'2024-01-10'</span>),<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Value'</span>: [<span class="number">10</span>, <span class="number">15</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">19</span>, <span class="number">16</span>, <span class="number">14</span>, <span class="number">18</span>, <span class="number">20</span>, <span class="number">22</span>]<br>
-                    })<br>
-                    fig = px.line(df, x=<span class="string">'Date'</span>, y=<span class="string">'Value'</span>, title=<span class="string">'Trend Analysis'</span>)<br><br>
-                    <span class="comment"># Add the plotly chart to the email</span><br>
+                    my = Mayil()<br><br>
+                    <span class="comment"># Create sample data and plot</span><br>
+                    df = px.data.stocks()<br>
+                    fig = px.line(df, x=<span class="string">'date'</span>, y=<span class="string">'GOOG'</span>)<br><br>
+                    <span class="comment"># Add chart to email</span><br>
                     my.plotly_chart(fig)
                 </div>
                 <div class="method-sample">
@@ -734,7 +736,11 @@
                     <dd>url (str): The URL that the link points to</dd>
                 </div>
                 <div class="code-block">
-                    my.hyperlink(<span class="string">"Visit our website"</span>, <span class="string">"https://example.com"</span>)
+                    <span class="comment"># Import Mayil</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
+                    <span class="comment"># Add hyperlink</span><br>
+                    my.link(<span class="string">"Visit our website"</span>, <span class="string">"https://example.com"</span>)
                 </div>
                 <div class="method-sample">
                     <a href="#" style="color: #2563eb; text-decoration: none;">Visit our website</a>
@@ -749,6 +755,9 @@
                     <dd>text (str): The markdown formatted text</dd>
                 </div>
                 <div class="code-block">
+                    <span class="comment"># Import Mayil</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
                     <span class="comment"># Basic markdown example</span><br>
                     my.markdown(<span class="string">"""
 # Heading 1
@@ -789,6 +798,9 @@ def hello():
                     <dd>color (str, optional): Hex color code to use for all mentions. If not provided, random neon colors will be used.</dd>
                 </div>
                 <div class="code-block">
+                    <span class="comment"># Import Mayil</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
                     <span class="comment"># Basic mentions with random colors</span><br>
                     my.mention([<span class="string">"john@example.com"</span>, <span class="string">"jane@example.com"</span>])<br><br>
                     <span class="comment"># Mentions with custom color</span><br>
@@ -820,6 +832,9 @@ def hello():
                     <dd>height (str/int, optional): Height of the image (e.g., "auto", 300)</dd>
                 </div>
                 <div class="code-block">
+                    <span class="comment"># Import Mayil</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
                     <span class="comment"># Local image file</span><br>
                     my.image(<span class="string">"path/to/image.jpg"</span>, alt_text=<span class="string">"Company Logo"</span>)<br><br>
                     <span class="comment"># Image from URL</span><br>
@@ -855,6 +870,9 @@ def hello():
                     <dd>signature_image (str, optional): Path to signature image file (jpg/png) or SVG content, or URL to image</dd>
                 </div>
                 <div class="code-block">
+                    <span class="comment"># Import Mayil</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
                     <span class="comment"># Basic text signature</span><br>
                     my.signature(<span class="string">"Best regards,"</span>, <span class="string">"John Doe"</span>, <span class="string">"Senior Software Engineer"</span>)<br><br>
                     <span class="comment"># With image signature (local file)</span><br>
@@ -896,6 +914,9 @@ def hello():
                     <dd>None</dd>
                 </div>
                 <div class="code-block">
+                    <span class="comment"># Import Mayil</span><br>
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
                     <span class="comment"># Create email content</span><br>
                     my.title(<span class="string">"Welcome"</span>)<br>
                     my.text(<span class="string">"Hello, World!"</span>)<br><br>

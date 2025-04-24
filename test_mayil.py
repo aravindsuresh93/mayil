@@ -1,9 +1,12 @@
-import mayil as my
+from mayil import Mayil
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
 def create_sample_email():
+    # Create Mayil instance
+    my = Mayil()
+
     # Build the email content
     my.title("Welcome to Our Newsletter")
 
@@ -187,13 +190,7 @@ if __name__ == "__main__":
     # Create the email
     create_sample_email()
     
-    # Get the HTML content
-    html_content = my.body()
-    
-    # Save to file
-    save_to_file(html_content)
-    
-    print("\nEmail preview:")
+
     # print("-" * 50)
     # print(html_content)
     # print("-" * 50) 

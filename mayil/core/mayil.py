@@ -576,7 +576,7 @@ class Mayil:
         
         # Save preview.html in the preview directory
         preview_path = preview_dir / 'preview.html'
-        preview_path.write_text(self.body, encoding='utf-8')
+        preview_path.write_text(self.body(), encoding='utf-8')
         
         # Open in browser
         webbrowser.open(f'file://{preview_path}')
@@ -588,7 +588,7 @@ class Mayil:
             path (str): The path to save the email body
         """
         with open(path, 'w', encoding='utf-8') as f:
-            f.write(self.body)
+            f.write(self.body())
 
     def image(self, source: str, width: str = "100%", height: str = "auto") -> "Mayil":
         """Add an image to the email body.
@@ -750,7 +750,7 @@ class Mayil:
         self.body_content.append(mentions_html)
         return self
 
-    @property
+    
     def body(self):
         """Get the complete HTML body of the email."""
         return f"""
