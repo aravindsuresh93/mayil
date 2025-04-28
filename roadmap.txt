@@ -1,4 +1,3 @@
-text
-    text italic
-    font size
-    underline
+ftable
+    inter column comparison
+
