@@ -68,6 +68,16 @@ def create_sample_email():
     # Test with cell background colors
     my.ftable(df, cell_colors=conditions)
 
+    # Test break_space method
+    my.break_space()  # Default 20px height
+    my.text("Text after default break")
+    
+    my.break_space(height=50)  # Custom height
+    my.text("Text after 50px break")
+    
+    my.break_space(height=10)  # Smaller break
+    my.text("Text after 10px break")
+
     # Test with text colors
     my.ftable(df, text_colors=conditions)
 

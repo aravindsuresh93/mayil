@@ -34,7 +34,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -287,6 +287,7 @@
                                 <li style="margin-left: 2rem;"><a href="#metric">metric</a></li>
                                 <li style="margin-left: 2rem;"><a href="#sticky-note">sticky_note</a></li>
                                 <li style="margin-left: 2rem;"><a href="#divider">divider</a></li>
+                                <li style="margin-left: 2rem;"><a href="#break-space">break_space</a></li>
                                 <li style="margin-left: 2rem;"><a href="#columns">columns</a></li>
                                 <li style="margin-left: 2rem;"><a href="#table">table</a></li>
                                 <li style="margin-left: 2rem;"><a href="#ftable">ftable</a></li>
@@ -479,10 +480,35 @@
                 <h4>divider()</h4>
                 <p>Add a light grey dotted divider line.</p>
                 <div class="code-block">
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
                     my.divider()
                 </div>
                 <div class="method-sample">
                     <hr style="clear: both; border: none; border-top: 2px dotted #e0e0e0; margin: 20px 0; border-spacing: 10px;">
+                </div>
+            </section>
+
+            <section id="break-space" class="method">
+                <h4>break_space(height=20)</h4>
+                <p>Add a vertical white space break to create spacing between elements.</p>
+                <div class="method-params">
+                    <dt>Parameters:</dt>
+                    <dd>height (int): Height of the break in pixels. Defaults to 20.</dd>
+                </div>
+                <div class="code-block">
+                    <span class="keyword">from</span> mayil <span class="keyword">import</span> Mayil<br>
+                    my = Mayil()<br><br>
+                    <span class="comment"># Default break (20px)</span><br>
+                    my.break_space()<br><br>
+                    <span class="comment"># Custom height break</span><br>
+                    my.break_space(height=<span class="number">50</span>)
+                </div>
+                <div class="method-sample">
+                    <div style="height: 20px; clear: both; background-color: #f5f5f5; border: 1px dashed #e0e0e0; margin-bottom: 10px;"></div>
+                    <div style="font-size: 12px; color: #666;">Default break (20px)</div>
+                    <div style="height: 50px; clear: both; background-color: #f5f5f5; border: 1px dashed #e0e0e0; margin: 10px 0;"></div>
+                    <div style="font-size: 12px; color: #666;">Custom break (50px)</div>
                 </div>
             </section>
 
@@ -584,8 +610,8 @@
                     <dt>Parameters:</dt>
                     <dd>df (pandas.DataFrame): The dataframe to display</dd>
                     <dd>conditions (dict): Dictionary mapping column names to list of conditions</dd>
-                    <dd>cell_colors (dict): Same format as conditions, but for cell background colors</dd>
-                    <dd>text_colors (dict): Same format as conditions, but for text colors</dd>
+                    <dd>cell_colors (dict): Dictionary with column names and conditions for cell background colors</dd>
+                    <dd>text_colors (dict): Dictionary with column names and conditions for text colors</dd>
                     <dd>align (str): Text alignment - 'left', 'center', or 'right'</dd>
                 </div>
                 <div class="code-block">
@@ -595,40 +621,54 @@
                     my = Mayil()<br><br>
                     <span class="comment"># Create sample DataFrame</span><br>
                     df = pd.DataFrame({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Product'</span>: [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Sales'</span>: [<span class="number">1500</span>, <span class="number">800</span>, <span class="number">2000</span>]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>, <span class="string">'Bob'</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Active'</span>: [<span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">True</span>]<br>
                     })<br><br>
-                    <span class="comment"># Add table with conditional formatting</span><br>
-                    my.table(df, conditions={<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Sales'</span>: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'above'</span>: [<span class="number">1000</span>, <span class="string">'#4CAF50'</span>],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'below'</span>: [<span class="number">1000</span>, <span class="string">'#F44336'</span>]<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    })
+                    <span class="comment"># Define conditions for formatting</span><br>
+                    conditions = {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x < <span class="number">90</span>, <span class="string">'#ff0000'</span>),  <span class="comment"># Red if < 90</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x >= <span class="number">90</span>, <span class="string">'#00ff00'</span>)   <span class="comment"># Green if >= 90</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Active'</span>: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x == <span class="keyword">True</span>, <span class="string">'#00ff00'</span>),  <span class="comment"># Green if True</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x == <span class="keyword">False</span>, <span class="string">'blue'</span>)     <span class="comment"># Blue if False</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                    }<br><br>
+                    <span class="comment"># Apply conditions to cell backgrounds</span><br>
+                    my.ftable(df, cell_colors=conditions)<br><br>
+                    <span class="comment"># Or apply conditions to text colors</span><br>
+                    my.ftable(df, text_colors=conditions)
                 </div>
                 <div class="method-sample">
                     <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
                         <thead>
                             <tr>
-                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Product</th>
-                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Sales</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Name</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Score</th>
+                                <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Active</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">A</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #4CAF50;">1500</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: rgba(255,0,0,0.1);">85</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: rgba(0,255,0,0.1);">True</td>
                             </tr>
                             <tr>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">B</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #F44336;">800</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: rgba(0,255,0,0.1);">92</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: rgba(0,0,255,0.1);">False</td>
                             </tr>
                             <tr>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">C</td>
-                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; background: #4CAF50;">2000</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Bob</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: rgba(255,0,0,0.1);">78</td>
+                                <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6; background: rgba(0,255,0,0.1);">True</td>
                             </tr>
                         </tbody>
                     </table>
+                    <p style="font-size: 14px; color: #666666; margin-top: 10px;">Table with cell background colors based on conditions</p>
                 </div>
             </section>
 

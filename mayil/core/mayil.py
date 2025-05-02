@@ -43,7 +43,7 @@ class Mayil:
             
             /* Container for better email client compatibility */
             .container {
-                max-width: 1000px;
+                max-width: 1200px;
                 margin: 0 auto;
                 padding: 20px;
                 width: 100%;
@@ -748,6 +748,15 @@ class Mayil:
 
         mentions_html += '</div>'
         self.body_content.append(mentions_html)
+        return self
+
+    def break_space(self, height=20):
+        """Add a vertical white space break.
+        
+        Args:
+            height (int): Height of the break in pixels. Defaults to 20.
+        """
+        self.body_content.append(f'<div style="height: {height}px; clear: both;"></div>')
         return self
 
     
