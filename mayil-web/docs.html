@@ -557,12 +557,13 @@
             </section>
 
             <section id="dataframe" class="method">
-                <h4>dataframe(df, align='left')</h4>
+                <h4>dataframe(df, align='left', use_container_width=True)</h4>
                 <p>Add a styled DataFrame to the email.</p>
                 <div class="method-params">
                     <dt>Parameters:</dt>
                     <dd>df: pandas DataFrame to display</dd>
                     <dd>align (str): Alignment of table content - 'left', 'center', or 'right'</dd>
+                    <dd>use_container_width (bool): Whether the table should take up the full container width (true) or auto-size to fit content (false). Defaults to True.</dd>
                 </div>
                 <div class="code-block">
                     <span class="comment"># Import required libraries</span><br>
@@ -574,10 +575,13 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Name'</span>: [<span class="string">'John'</span>, <span class="string">'Jane'</span>, <span class="string">'Bob'</span>],<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Score'</span>: [<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>]<br>
                     })<br><br>
-                    <span class="comment"># Add DataFrame to email</span><br>
-                    my.dataframe(df)
+                    <span class="comment"># Full width table (default)</span><br>
+                    my.dataframe(df)<br><br>
+                    <span class="comment"># Auto-sized width table (only as wide as needed)</span><br>
+                    my.dataframe(df, align=<span class="string">'center'</span>, use_container_width=<span class="keyword">False</span>)
                 </div>
                 <div class="method-sample">
+                    <p style="font-size: 14px; color: #666666; margin-bottom: 5px;">Full width table:</p>
                     <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
                         <thead>
                             <tr>
@@ -600,11 +604,37 @@
                             </tr>
                         </tbody>
                     </table>
+                    
+                    <p style="font-size: 14px; color: #666666; margin-bottom: 5px; margin-top: 20px;">Auto-sized table (use_container_width=False):</p>
+                    <div style="text-align: left;">
+                        <table style="border-collapse: separate; border-spacing: 0; width: auto; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Name</th>
+                                    <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb;">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">85</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">92</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Bob</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb;">78</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
             <section id="ftable" class="method">
-                <h4>ftable(df, conditions=None, cell_colors=None, text_colors=None, align='left')</h4>
+                <h4>ftable(df, conditions=None, cell_colors=None, text_colors=None, align='left', use_container_width=True)</h4>
                 <p>Add a formatted table with conditional coloring based on column values.</p>
                 <div class="method-params">
                     <dt>Parameters:</dt>
@@ -613,6 +643,7 @@
                     <dd>cell_colors (dict): Dictionary with column names and conditions for cell background colors</dd>
                     <dd>text_colors (dict): Dictionary with column names and conditions for text colors</dd>
                     <dd>align (str): Text alignment - 'left', 'center', or 'right'</dd>
+                    <dd>use_container_width (bool): Whether the table should take up the full container width (true) or auto-size to fit content (false). Defaults to True.</dd>
                 </div>
                 <div class="code-block">
                     <span class="comment"># Import required libraries</span><br>
@@ -636,12 +667,13 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">lambda</span> x: x == <span class="keyword">False</span>, <span class="string">'blue'</span>)     <span class="comment"># Blue if False</span><br>
                     &nbsp;&nbsp;&nbsp;&nbsp;]<br>
                     }<br><br>
-                    <span class="comment"># Apply conditions to cell backgrounds</span><br>
+                    <span class="comment"># Full width table with cell background colors</span><br>
                     my.ftable(df, cell_colors=conditions)<br><br>
-                    <span class="comment"># Or apply conditions to text colors</span><br>
-                    my.ftable(df, text_colors=conditions)
+                    <span class="comment"># Auto-sized table with text colors</span><br>
+                    my.ftable(df, text_colors=conditions, use_container_width=<span class="keyword">False</span>)
                 </div>
                 <div class="method-sample">
+                    <p style="font-size: 14px; color: #666666; margin-bottom: 5px;">Full width table with cell background colors:</p>
                     <table style="border-collapse: separate; border-spacing: 0; width: 100%; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
                         <thead>
                             <tr>
@@ -668,7 +700,36 @@
                             </tr>
                         </tbody>
                     </table>
-                    <p style="font-size: 14px; color: #666666; margin-top: 10px;">Table with cell background colors based on conditions</p>
+                    
+                    <p style="font-size: 14px; color: #666666; margin-bottom: 5px; margin-top: 20px;">Auto-sized table with text colors (use_container_width=False):</p>
+                    <div style="text-align: left;">
+                        <table style="border-collapse: separate; border-spacing: 0; width: auto; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Name</th>
+                                    <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Score</th>
+                                    <th style="background-color: #f9fafb; font-weight: 600; text-align: center; padding: 8px; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">John</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;"><span style="color: #ff0000;">85</span></td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;"><span style="color: #00ff00;">True</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Jane</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;"><span style="color: #00ff00;">92</span></td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;"><span style="color: blue;">False</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;">Bob</td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;"><span style="color: #ff0000;">78</span></td>
+                                    <td style="padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #f3f4f6;"><span style="color: #00ff00;">True</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 

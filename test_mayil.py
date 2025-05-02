@@ -40,13 +40,13 @@ def create_sample_email():
         
     df = pd.DataFrame({
         'ID': [1, 2, 3],
-        'Name': ['John', 'Jane', 'Bob'], 
+        'Name': ['John', 'Jane', 'Bob'],
         'Age': [25, 30, 35],
         'Timestamp': pd.to_datetime(['2024-01-01', '2024-01-02', '2024-01-03']),
         'Score': [95.5, 88.3, 92.1],
         'Active': [True, False, True]
     })
-    my.table(df)
+    my.table(df, use_container_width=False)
     my.hyperlink("Click here", "https://www.google.com")
 
     # Test ftable with conditional formatting
@@ -66,7 +66,8 @@ def create_sample_email():
     }
 
     # Test with cell background colors
-    my.ftable(df, cell_colors=conditions)
+    my.ftable(df, cell_colors=conditions,)
+    my.ftable(df, cell_colors=conditions, use_container_width=False)
 
     # Test break_space method
     my.break_space()  # Default 20px height

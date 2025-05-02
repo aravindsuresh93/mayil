@@ -253,13 +253,13 @@ class Mayil:
         
         return columns
 
-    def table(self, df, align='left'):
+    def table(self, df, align='left', use_container_width=True):
         """Add a styled DataFrame to the email.
         
         Args:
             df: pandas DataFrame to display
             align (str): Alignment of table content - 'left', 'center', or 'right'. Default is 'left'
-            dotted_lines: If True, uses dotted lines instead of solid lines
+            use_container_width (bool): Whether the table should take up full container width. Defaults to True.
         """
         # Validate alignment parameter
         valid_alignments = ['left', 'center', 'right']
@@ -283,11 +283,12 @@ class Mayil:
         
         # Add custom styling
         styled_table = f"""
+        <div style="width: {('100%' if use_container_width else 'fit-content')}; margin: {('0 auto' if use_container_width else '0')};">
         <style>
             .mayil-table {{
                 border-collapse: separate;
                 border-spacing: 0;
-                width: 100%;
+                width: {('100%' if use_container_width else 'auto')};
                 margin: 16px 0;
                 border-radius: 8px;
                 overflow: hidden;
@@ -320,12 +321,13 @@ class Mayil:
             }}
         </style>
         {table_html}
+        </div>
         """
         
         self.body_content.append(styled_table)
         return self
 
-    def ftable(self, df, conditions=None, cell_colors=None, text_colors=None, align='left'):
+    def ftable(self, df, conditions=None, cell_colors=None, text_colors=None, align='left', use_container_width=True):
         """Add a formatted table with conditional coloring based on column values.
         
         Args:
@@ -352,6 +354,7 @@ class Mayil:
             text_colors (dict or bool): If dict, same format as conditions but for text colors.
                                        If bool (legacy), True applies conditions as text colors, False as background colors.
             align (str): Text alignment - 'left', 'center', or 'right'
+            use_container_width (bool): Whether the table should take up full container width. Defaults to True.
             
         Returns:
             Mayil: The Mayil instance for method chaining
@@ -441,11 +444,12 @@ class Mayil:
         
         # Add custom styling
         styled_table = f"""
+        <div style="width: {('100%' if use_container_width else 'fit-content')}; margin: {('0 auto' if use_container_width else '0')};">
         <style>
             .mayil-table {{
                 border-collapse: separate;
                 border-spacing: 0;
-                width: 100%;
+                width: {('100%' if use_container_width else 'auto')};
                 margin: 16px 0;
                 border-radius: 8px;
                 overflow: hidden;
@@ -483,6 +487,7 @@ class Mayil:
             {' '.join(conditional_styles)}
         </style>
         {table_html}
+        </div>
         """
         
         self.body_content.append(styled_table)
