@@ -57,7 +57,7 @@ def create_sample_email():
         ],
         'Active': [
             (lambda x: x == True, '#00ff00'),  # Green if active
-            (lambda x: x == False, 'blue')  # Red if inactive
+            (lambda x: x == False, '#0000ff')  # Red if inactive
         ],
         'Timestamp': [
             (lambda x: x < pd.Timestamp('2024-01-02'), '#ff0000'),  # Red if before Jan 2
@@ -176,7 +176,7 @@ def create_sample_email():
     
     # Test local image
     my.text("Local image with custom dimensions:")
-    my.image("/Users/aravsure/Desktop/ss.png")
+    # my.image("/Users/aravsure/Desktop/ss.png")
     
     # Test URL image
     my.text("Remote image with auto dimensions:")

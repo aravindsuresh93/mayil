@@ -274,57 +274,33 @@ class Mayil:
         border_style = "1px solid #e5e7eb"
         column_border = "1px solid #f3f4f6"
         
-        table_html = df.to_html(
-            index=False,
-            classes='mayil-table',
-            border=0,
-            escape=True
-        )
+        # Generate HTML manually for better email compatibility
+        table_width = "100%" if use_container_width else "auto"
+        container_width = "100%" if use_container_width else "fit-content"
+        container_margin = "0 auto" if use_container_width else "0"
         
-        # Add custom styling
-        styled_table = f"""
-        <div style="width: {('100%' if use_container_width else 'fit-content')}; margin: {('0 auto' if use_container_width else '0')};">
-        <style>
-            .mayil-table {{
-                border-collapse: separate;
-                border-spacing: 0;
-                width: {('100%' if use_container_width else 'auto')};
-                margin: 16px 0;
-                border-radius: 8px;
-                overflow: hidden;
-                font-size: 14px;
-                border: {border_style};
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            }}
-            .mayil-table thead th {{
-                background-color: #f9fafb;
-                font-weight: 600;
-                text-align: {align};
-                padding: 8px;
-                border-bottom: {border_style};
-                border-right: {column_border};
-            }}
-            .mayil-table thead th:last-child {{
-                border-right: none;
-            }}
-            .mayil-table tbody td {{
-                padding: 8px;
-                text-align: {align};
-                border-bottom: {border_style};
-                border-right: {column_border};
-            }}
-            .mayil-table tbody td:last-child {{
-                border-right: none;
-            }}
-            .mayil-table tbody tr:last-child td {{
-                border-bottom: none;
-            }}
-        </style>
-        {table_html}
-        </div>
-        """
+        # Start building the table HTML
+        html = f'<div style="width: {container_width}; margin: {container_margin}; padding: 0;">\n'
+        html += f'<table cellspacing="0" cellpadding="0" border="0" width="{table_width}" style="border-collapse: separate; border-spacing: 0; width: {table_width}; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: {border_style}; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">\n'
         
-        self.body_content.append(styled_table)
+        # Headers
+        html += '<thead>\n<tr>\n'
+        for col in df.columns:
+            html += f'<th bgcolor="#f9fafb" style="background-color: #f9fafb; font-weight: 600; text-align: {align}; padding: 8px; border-bottom: {border_style}; border-right: {column_border};">{col}</th>\n'
+        html += '</tr>\n</thead>\n'
+        
+        # Body
+        html += '<tbody>\n'
+        for _, row in df.iterrows():
+            html += '<tr>\n'
+            for val in row:
+                html += f'<td style="padding: 8px; text-align: {align}; border-bottom: {border_style}; border-right: {column_border};">{val}</td>\n'
+            html += '</tr>\n'
+        html += '</tbody>\n'
+        
+        html += '</table>\n</div>'
+        
+        self.body_content.append(html)
         return self
 
     def ftable(self, df, conditions=None, cell_colors=None, text_colors=None, align='left', use_container_width=True):
@@ -359,138 +335,98 @@ class Mayil:
         Returns:
             Mayil: The Mayil instance for method chaining
         """
-        border_style = "1px solid #e5e7eb"
-        
         # Create a copy to avoid modifying original
         styled_df = df.copy()
         
-        # Generate CSS for conditional formatting
-        conditional_styles = []
+        # Create dictionaries for cell and text styling
+        cell_style_map = {}
+        text_style_map = {}
         
         # Helper function to apply conditions
-        def apply_conditions(conditions_dict, style_prop, opacity=None):
+        def apply_conditions(conditions_dict, target_map, opacity=None):
             if not conditions_dict:
                 return
                 
             for col, rules in conditions_dict.items():
                 if col in df.columns and isinstance(rules, list):
-                    for i, rule in enumerate(rules):
+                    # Initialize style map entry for this column
+                    if col not in target_map:
+                        target_map[col] = {}
+                    
+                    for rule in rules:
                         try:
                             condition_func, color = rule
-                            class_name = f'{style_prop}-{str(hash(str(col)))[:5]}-{i}'
                             
                             # Convert color to rgba if opacity specified
-                            if opacity:
-                                if color.startswith('#'):
-                                    # Convert hex to rgb values
-                                    r = int(color[1:3], 16)
-                                    g = int(color[3:5], 16)
-                                    b = int(color[5:7], 16)
-                                    color = f'rgba({r},{g},{b},{opacity})'
-                                elif color.startswith('rgb('):
-                                    # Convert rgb() to rgba()
-                                    rgb = color[4:-1]  # Remove 'rgb(' and ')'
-                                    color = f'rgba({rgb},{opacity})'
-                                elif color.startswith('rgba('):
-                                    # Already rgba, just keep it
-                                    pass
-                                else:
-                                    # Handle named colors by using a style element to get RGB values
-                                    # Map common color names to RGB values
-                                    color_map = {
-                                        'blue': '0,0,255',
-                                        'red': '255,0,0',
-                                        'green': '0,255,0',
-                                        'yellow': '255,255,0'
-                                    }
-                                    rgb_values = color_map.get(color, '0,0,0')
-                                    color = f'rgba({rgb_values},{opacity})'
-                            
-                            conditional_styles.append(f"""
-                                .{class_name} {{
-                                    {style_prop}: {color} !important;
-                                }}
-                            """)
+                            if opacity and color.startswith('#'):
+                                r = int(color[1:3], 16)
+                                g = int(color[3:5], 16)
+                                b = int(color[5:7], 16)
+                                color = f'rgba({r},{g},{b},{opacity})'
                             
                             # Apply the condition function to the column
-                            mask = df[col].apply(condition_func)
-                            
-                            if mask is not None:
-                                if style_prop == 'background-color':
-                                    # For cell colors, add class directly to values
-                                    styled_df.loc[mask, col] = styled_df.loc[mask, col].apply(
-                                        lambda x: f'<div class="{class_name}">{x}</div>'
-                                    )
-                                else:
-                                    # For text colors, wrap content in span
-                                    styled_df.loc[mask, col] = styled_df.loc[mask, col].apply(
-                                        lambda x: f'<span class="{class_name}">{x}</span>'
-                                    )
+                            for idx, value in df[col].items():
+                                if condition_func(value):
+                                    if idx not in target_map[col]:
+                                        target_map[col][idx] = color
                         except (ValueError, TypeError) as e:
                             print(f"Warning: Invalid condition format for column '{col}': {rule}")
                             continue
         
-
-        apply_conditions(cell_colors, 'background-color', opacity='0.1') 
-        apply_conditions(text_colors, 'color')
+        # Apply conditions to the style maps
+        apply_conditions(cell_colors, cell_style_map, opacity='0.1')
+        apply_conditions(text_colors, text_style_map)
         
-        # Convert to HTML with escape=False to preserve our span tags
-        table_html = styled_df.to_html(
-            index=False,
-            classes='mayil-table',
-            border=0,
-            escape=False
-        )
+        # Setup table parameters
+        border_style = "1px solid #e5e7eb"
+        table_width = "100%" if use_container_width else "auto"
+        container_width = "100%" if use_container_width else "fit-content"
+        container_margin = "0 auto" if use_container_width else "0"
         
-        # Add custom styling
-        styled_table = f"""
-        <div style="width: {('100%' if use_container_width else 'fit-content')}; margin: {('0 auto' if use_container_width else '0')};">
-        <style>
-            .mayil-table {{
-                border-collapse: separate;
-                border-spacing: 0;
-                width: {('100%' if use_container_width else 'auto')};
-                margin: 16px 0;
-                border-radius: 8px;
-                overflow: hidden;
-                font-size: 14px;
-                border: {border_style};
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            }}
-            .mayil-table thead th {{
-                background-color: #f9fafb;
-                font-weight: 600;
-                text-align: {align};
-                padding: 8px;
-                border-bottom: {border_style};
-                border-right: {border_style};
-            }}
-            .mayil-table thead th:last-child {{
-                border-right: none;
-            }}
-            .mayil-table tbody td {{
-                padding: 8px;
-                text-align: {align};
-                border-bottom: {border_style};
-                border-right: {border_style};
-            }}
-            .mayil-table tbody td:last-child {{
-                border-right: none;
-            }}
-            .mayil-table tbody tr:last-child td {{
-                border-bottom: none;
-            }}
-            .mayil-table div {{
-                padding: 4px;
-                border-radius: 4px;
-            }}
-            {' '.join(conditional_styles)}
-        </style>
-        {table_html}
-        </div>
-        """
+        # Start building the HTML table with email-friendly attributes
+        html = f'<div style="width: {container_width}; margin: {container_margin}; padding: 0;">\n'
+        html += f'<table cellspacing="0" cellpadding="0" border="0" width="{table_width}" style="border-collapse: separate; border-spacing: 0; width: {table_width}; margin: 16px 0; border-radius: 8px; overflow: hidden; font-size: 14px; border: {border_style}; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">\n'
         
-        self.body_content.append(styled_table)
+        # Headers
+        html += '<thead>\n<tr>\n'
+        for col in styled_df.columns:
+            html += f'<th bgcolor="#f9fafb" style="background-color: #f9fafb; font-weight: 600; text-align: {align}; padding: 8px; border-bottom: {border_style}; border-right: {border_style};">{col}</th>\n'
+        html += '</tr>\n</thead>\n'
+        
+        # Body
+        html += '<tbody>\n'
+        for idx, row in styled_df.iterrows():
+            html += '<tr>\n'
+            for col, val in row.items():
+                # Apply cell background color if specified
+                bg_style = ""
+                if col in cell_style_map and idx in cell_style_map[col]:
+                    bg_color = cell_style_map[col][idx]
+                    bg_style = f" background-color: {bg_color};"
+                
+                # Apply text color if specified
+                text_style = ""
+                if col in text_style_map and idx in text_style_map[col]:
+                    text_color = text_style_map[col][idx]
+                    text_style = f" color: {text_color};"
+                
+                # Create the cell with proper styling
+                html += f'<td style="padding: 8px; text-align: {align}; border-bottom: {border_style}; border-right: {border_style};{bg_style}">'
+                
+                # If text styling is needed, wrap content in span
+                if text_style:
+                    html += f'<span style="{text_style}">{val}</span>'
+                else:
+                    html += f'{val}'
+                
+                html += '</td>\n'
+            
+            html += '</tr>\n'
+        html += '</tbody>\n'
+        
+        html += '</table>\n</div>'
+        
+        self.body_content.append(html)
         return self
    
     def hyperlink(self, text: str, url: str) -> 'Mayil':
@@ -767,18 +703,37 @@ class Mayil:
     
     def body(self):
         """Get the complete HTML body of the email."""
-        return f"""
-        <!DOCTYPE html>
-        <html>
+        html_content = f"""
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="x-apple-disable-message-reformatting" />
+            <meta name="color-scheme" content="light">
+            <meta name="supported-color-schemes" content="light">
             {self._styles}
         </head>
-        <body>
-            <div class="container">
+        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #2c3e50; margin: 0; padding: 20px; background-color: #ffffff;">
+            <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px; width: 100%;">
                 {''.join(self.body_content)}
             </div>
+            
+            <!-- Extra spacer table for Gmail compatibility -->
+            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="min-width:100%;">
+                <tr><td height="1" style="min-width:100%; font-size:1px; line-height:1px;">&nbsp;</td></tr>
+            </table>
         </body>
         </html>
         """
+        
+        # Inline all CSS using premailer for better email client compatibility
+        try:
+            from premailer import Premailer
+            premailer = Premailer(html_content, remove_classes=False, keep_style_tags=True)
+            inlined_html = premailer.transform()
+            return inlined_html
+        except ImportError:
+            print("Warning: premailer package is not installed. Emails will not have inlined CSS, which may affect formatting in some email clients.")
+            return html_content
