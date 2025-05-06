@@ -58,7 +58,7 @@ def create_sample_email():
         'Active': [
             (lambda x: x == True, '#00ff00'),  # Green if active
             (lambda x: x == False, '#0000ff')  # Red if inactive
-        ],
+        
         'Timestamp': [
             (lambda x: x < pd.Timestamp('2024-01-02'), '#ff0000'),  # Red if before Jan 2
             (lambda x: x >= pd.Timestamp('2024-01-02'), '#00ff00')  # Green if Jan 2 or later
